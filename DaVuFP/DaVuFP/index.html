@@ -1,0 +1,2520 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!--thu vien tham khao-->
+    <link href=fontawesome/css/all.css rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto&display=swap" rel="stylesheet">
+    <script src="Jquery.js"></script>
+    <script src="wow.min.js"></script>
+    <link href="animate.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        new WOW().init();
+    </script>
+
+    <style type="text/css">
+        .preload {
+            background-color: #E3E3E3;
+        }
+    </style>
+
+</head>
+<body class="preload">
+
+    <!--header và style của header-->
+    <style type="text/css">
+
+
+
+        @media screen and (min-width: 960px) {
+
+
+            .btnlist {
+                display: none;
+                background-color: inherit;
+                color: #008b8b;
+                padding-bottom: 12px;
+                padding-top: 12px
+            }
+
+            .myDropdown {
+                display: none;
+            }
+
+            .header {
+                background-color: white;
+                padding: 20px 0;
+                /*
+
+        */
+                position: -webkit-sticky; /* Safari */
+                position: sticky;
+                top: 0;
+            }
+
+            .headerMenu {
+                display: flex;
+                flex-flow: wrap row;
+                background-color: #faf0ff;
+                /*color: white;*/
+                color: #008b8b;
+                /**/
+                font-size: 22px;
+                height: 50px;
+                /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+            }
+
+                .headerMenu .start, .headerMenu .end {
+                    flex-grow: 1;
+                }
+
+            .headerMenuContent {
+                display: flex;
+                flex-flow: row wrap;
+                flex-grow: 0;
+                width: 960px;
+            }
+
+                .headerMenuContent ul li {
+                    /*width: 160px;*/
+                    font-family: 'Quicksand';
+                }
+
+                    .headerMenuContent ul li:hover {
+                        color: white;
+                        background-color: #6a1051;
+                    }
+
+                    .headerMenuContent ul li a {
+                        color: inherit;
+                    }
+
+
+            .headerMenu ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #faf0ff;
+                height: 50px;
+            }
+
+            .headerMenu li {
+                float: left;
+                text-align: center;
+            }
+
+
+
+                .headerMenu li a, .preload > .headerMenu .dropbtn {
+                    display: inline-block;
+                    /**/
+                    color: #008b8b;
+                    /**/
+                    text-align: center;
+                    padding: 11px 16px;
+                    text-decoration: none;
+                }
+
+
+            /*.headerMenu .dropbtn:hover .dropdown-content
+            {
+                display:block;
+            }*/
+
+            .headerMenu .start {
+                background: 0;
+                margin-left: 10px;
+                display: flex;
+                margin-top: auto;
+                margin-bottom: auto;
+                color: #6a1051;
+                position: relative;
+                display: inline-block;
+            }
+
+            .headerMenu li.dropdown {
+                display: inline-block;
+            }
+
+                .headerMenu li.dropdown a:hover {
+                    color: white;
+                }
+
+
+            .headerMenu .dropdown-content, .headerMenu #myDropdown {
+                display: none;
+                position: absolute;
+                background-color: #faf0ff;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+                .headerMenu .dropdown-content a, .headerMenu #myDropdown a {
+                    color: #008b8b;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                    text-align: center;
+                }
+
+                    .headerMenu .dropdown-content a:hover {
+                        background-color: #6a1051;
+                        color: white;
+                    }
+
+            .headerMenu .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .headerMenu .show {
+                display: block;
+            }
+
+
+            #shopname {
+                font-family: 'Quicksand';
+                font-size: 20px;
+                margin-top: 10px;
+                color: #de8ec8;
+            }
+
+            .logo {
+                height: 85px;
+                width: 85px;
+            }
+
+            #slogan {
+                font-family: 'Dancing Script', cursive;
+                font-weight: 700;
+                font-size: 200%;
+                color: #9656a1;
+            }
+
+            .imga img {
+                padding: 0 10px;
+            }
+
+            .shopping-cart {
+                margin-left: 40px;
+                margin-right: 30px;
+                text-align: center;
+                display: flex;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            .notify-container {
+                position: relative;
+                display: inline-block;
+                /*chỉnh bubble*/
+                margin-top: 0px;
+            }
+
+            .notify-bubble {
+                position: absolute;
+                top: -8px;
+                right: 20px;
+                padding: 2px 5px 2px 6px;
+                background-color: #008b8b;
+                color: white;
+                font-size: 0.65em;
+                border-radius: 50%;
+                box-shadow: 1px 1px 1px gray;
+                display: none;
+            }
+
+
+
+            .headerInfo {
+                margin: 0 auto;
+                justify-content: space-between;
+                width: 100%;
+                /**/
+            }
+
+                .headerInfo input {
+                    font-size: 20px;
+                }
+
+
+                .headerInfo .imga {
+                    background: 0;
+                    margin-left: 30px;
+                    margin-right: auto;
+                    display: flex;
+                }
+
+
+                .headerInfo .search_wrapper {
+                    border: solid #6a1051 1.5px;
+                    border-radius: 50px;
+                    padding: 5px 0 5px 20px;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    width: 30%;
+                }
+
+                .headerInfo .search_input {
+                    height: 30px;
+                    width: 78%;
+                    border: 0;
+                    /**/
+                    outline: none;
+                    background-color: transparent;
+                    margin-right: 20px;
+                    color: #6a1051;
+                }
+
+                .headerInfo .search_wrapper ::placeholder {
+                    color: #6a1051;
+                    opacity: 0.65;
+                }
+
+                .headerInfo .search_button {
+                    background: 0;
+                    border: 0;
+                    color: #d79abc;
+                    padding-top: 2.6px;
+                }
+
+
+
+                .headerInfo .imgb {
+                    background: none;
+                    margin-left: 10px;
+                    display: flex;
+                    margin-left: auto;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    color: #d79abc
+                }
+
+                .headerInfo .imgc a:hover {
+                    color: #f2bddb;
+                }
+
+                .headerInfo .imgb a:hover {
+                    color: #f2bddb;
+                }
+
+                .headerInfo .search_button:hover {
+                    color: #f2bddb;
+                }
+
+                .headerInfo .imgc {
+                    background: 0;
+                    margin-left: 40px;
+                    margin-right: 30px;
+                    text-align: center;
+                    display: flex;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    color: #d79abc;
+                    /*margin-right:auto;
+                        margin-left:auto;*/
+                }
+
+            .headerInfo {
+                display: flex;
+                flex-flow: row wrap;
+            }
+        }
+
+
+        @media screen and (min-width: 760px) and (max-width: 960px) {
+
+
+            .btnlist {
+                display: inline-block;
+                background-color: inherit;
+                color: #008b8b;
+                padding: 12px 16px;
+            }
+
+                .btnlist:hover {
+                    cursor: pointer;
+                }
+
+            .header {
+                background-color: white;
+                padding: 20px 0;
+                /*
+
+        */
+                position: -webkit-sticky; /* Safari */
+                position: sticky;
+                top: 0;
+            }
+
+            .headerMenu {
+                display: flex;
+                flex-flow: wrap row;
+                background-color: #faf0ff;
+                /*color: white;*/
+                color: #008b8b;
+                /**/
+                font-size: 25px;
+                height: 50px;
+                /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+            }
+
+                .headerMenu .start, .headerMenu .end {
+                    flex-grow: 1;
+                }
+
+            .headerMenuContent {
+                display: none;
+            }
+
+                .headerMenuContent ul li {
+                    width: 160px;
+                }
+
+                    .headerMenuContent ul li:hover {
+                        color: white;
+                        background-color: #6a1051;
+                    }
+
+                    .headerMenuContent ul li a {
+                        color: inherit;
+                    }
+
+
+            .headerMenu ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #faf0ff;
+                height: 50px;
+            }
+
+            .headerMenu li {
+                float: left;
+                text-align: center;
+            }
+
+
+
+                .headerMenu li a, .preload > .headerMenu .dropbtn {
+                    display: inline-block;
+                    /**/
+                    color: #008b8b;
+                    /**/
+                    text-align: center;
+                    padding: 11px 16px;
+                    text-decoration: none;
+                }
+
+            .headerMenu .start {
+                background: 0;
+                margin-left: 0px;
+                display: flex;
+                margin-top: auto;
+                margin-bottom: auto;
+                color: #6a1051;
+                position: relative;
+                display: inline-block;
+            }
+
+                .headerMenu .start .myDropdown {
+                    font-size: 1.25rem;
+                }
+
+
+
+            .headerMenu li.dropdown {
+                display: inline-block;
+            }
+
+                .headerMenu li.dropdown a:hover {
+                    color: white;
+                }
+
+
+            .headerMenu .dropdown-content, .headerMenu .myDropdown {
+                display: none;
+                position: absolute;
+                background-color: #faf0ff;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+                .headerMenu .dropdown-content a, .myDropdown a {
+                    color: #008b8b;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                    text-align: center;
+                }
+
+                    .headerMenu .dropdown-content a:hover {
+                        background-color: #6a1051;
+                        color: white;
+                    }
+
+            /*hover cho burger*/
+            /*#myDropdown >.sideMenu :hover{
+                        background-color: #6a1051;
+                        color: white;
+                    }*/
+
+            /*#myDropdown > .sideMenu >.dropdown-content a:hover
+                    {
+                        background-color: #6a1051;
+                        color: white;
+                    }*/
+
+            .headerMenu .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .headerMenu .show {
+                display: block;
+            }
+
+
+            .headerMenu .sideMenu div {
+                margin-top: -48px;
+                margin-left: 160px;
+            }
+
+            .headerMenu .sideMenu a:hover {
+                background-color: #6a1051;
+                color: white;
+            }
+
+
+            .logo {
+                height: 60px;
+                width: 60px;
+            }
+
+            #shopname {
+                font-family: 'Century Gothic';
+                font-size: 16px;
+                margin-top: 5px;
+                color: #de8ec8;
+            }
+
+            #slogan {
+                font-family: 'Dancing Script', cursive;
+                font-weight: 700;
+                font-size: 150%;
+                color: #9656a1;
+            }
+
+            .imga img {
+                padding: 0 10px;
+            }
+
+            .shopping-cart {
+                margin-left: 10px;
+                margin-right: 30px;
+                text-align: center;
+                display: flex;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            .notify-container {
+                position: relative;
+                display: inline-block;
+                /*chỉnh bubble*/
+                margin-top: 0px;
+            }
+
+            .notify-bubble {
+                position: absolute;
+                top: -8px;
+                right: 20px;
+                padding: 2px 5px 2px 6px;
+                background-color: green;
+                color: white;
+                font-size: 0.65em;
+                border-radius: 50%;
+                box-shadow: 1px 1px 1px gray;
+                display: none;
+            }
+
+
+
+            .headerInfo {
+                margin: 0 auto;
+                justify-content: space-between;
+                width: 100%;
+                /**/
+            }
+
+                .headerInfo input {
+                    font-size: 16px;
+                }
+
+
+                .headerInfo .imga {
+                    background: 0;
+                    margin-left: 30px;
+                    margin-right: auto;
+                    display: flex;
+                }
+
+
+                .headerInfo .search_wrapper {
+                    display: flex;
+                    flex-flow: row wrap;
+                    justify-content: space-between;
+                    border: solid #6a1051 1px;
+                    border-radius: 20px;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+                    width: 30%;
+                }
+
+                .headerInfo .search_input {
+                    height: 20px;
+                    width: 78%;
+                    border: 0;
+                    /**/
+                    outline: none;
+                    background-color: transparent;
+                    margin-right: 0px;
+                    color: #6a1051;
+                }
+
+                .headerInfo .search_wrapper ::placeholder {
+                    color: #6a1051;
+                    opacity: 0.65;
+                }
+
+                .headerInfo .search_button {
+                    background: 0;
+                    border: 0;
+                    color: #d79abc;
+                    padding: 0;
+                }
+
+            .search_button i {
+                font-size: 1rem;
+            }
+
+
+
+            .headerInfo .imgb {
+                background: none;
+                margin-left: 10px;
+                display: flex;
+                margin-left: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+                color: #d79abc
+            }
+
+                .headerInfo .imgb i, .headerInfo .imgc i {
+                    font-size: 1.5rem;
+                }
+
+            .headerInfo .imgc a:hover {
+                color: #f2bddb;
+            }
+
+            .headerInfo .imgb a:hover {
+                color: #f2bddb;
+            }
+
+            .headerInfo .search_button:hover {
+                color: #f2bddb;
+            }
+
+            .headerInfo .imgc {
+                background: 0;
+                margin-left: 40px;
+                margin-right: 30px;
+                text-align: center;
+                display: flex;
+                margin-top: auto;
+                margin-bottom: auto;
+                color: #d79abc;
+                /*margin-right:auto;
+                        margin-left:auto;*/
+            }
+
+            .headerInfo {
+                display: flex;
+                flex-flow: row wrap;
+            }
+        }
+    </style>
+
+    <!--script gd cua header-->
+    <script type="text/javascript">
+        function showHamburger() {
+            var value = document.getElementsByClassName("myDropdown")[0].style.display;
+            if (value != "block") {
+                document.getElementsByClassName("myDropdown")[0].style.display = 'block';
+            }
+            else {
+                document.getElementsByClassName("myDropdown")[0].style.display = 'none';
+            }
+        }
+
+        function showorNotShowMenuChildrenWhenClick(item) {
+            var dropDownList = item.parentNode.getElementsByClassName("dropdown-content")[0];
+            var value = dropDownList.style.display;
+            if (value != 'block') {
+                dropDownList.style.display = 'block';
+            }
+            else {
+                dropDownList.style.display = 'none';
+            }
+        }
+        function showorNotShowMenuChildrenWhenHover(item) {
+
+
+
+            var allDropDownList = document.getElementsByClassName("dropdown-content");
+
+            var i = 1;
+            for (i = 0; i < allDropDownList.length; i++) {
+                if (allDropDownList[i].style.display == "block") {
+                    break;
+                }
+            }
+            //không hiện tất cả
+            if (i == allDropDownList.length) {
+
+            }
+            else {
+                //tồn tại 1 cái hiện
+                for (i = 0; i < allDropDownList.length; i++) {
+                    allDropDownList[i].style.display = "none";
+                }
+
+                var dropDownList = item.parentNode.getElementsByClassName("dropdown-content")[0];
+                var value = dropDownList.style.display;
+                if (value != 'block') {
+                    dropDownList.style.display = 'block';
+                }
+            }
+
+
+
+        }
+
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.btnlist')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+
+                }
+
+            }
+
+        }
+    </script>
+
+    <!--html gd cua header-->
+    <div class="header">
+        <div class="headerInfo">
+            <div class="imga">
+                <a href="index.html" target="_self">
+                    <img class="logo" src="ligi.png" />
+                </a>
+                <div>
+                    <div id="shopname">davuflower.vn</div>
+                    <div id="slogan">Nơi Hy Vọng Ngân Dài</div>
+                </div>
+            </div>
+
+            <form class="search_wrapper" action="/action_page.php">
+                <input class="search_input" type="text" placeholder="Search here ..." />
+                <button class="search_button">
+                    <i class="fas fa-search fa-2x"></i>
+                </button>
+            </form>
+
+            <div class="imgb">
+
+                <a onclick="
+                            window.open('dangnhap.html', '_self');">
+                    <i class="far fa-user-circle fa-2x"></i>
+                </a>
+
+            </div>
+            <div class="shopping-cart">
+                <div class="notify-container">
+                    <span class="notify-bubble">1</span>
+                    <div class="imgc btn-notify" onclick="
+                            window.open('GioHang.html', '_self');">
+                        <a>
+
+                            <i class="fas fa-shopping-cart fa-2x" onclick="
+                            window.open('GioHang.html', '_self');"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="headerMenu">
+        <div class="start">
+            <!--<button onclick="myFunction()" class="btnlist">-->
+            <i onclick="showHamburger()" class="fas fa-bars fa-1x btnlist"></i>
+            <!--</button>-->
+            <div class="myDropdown">
+                <div class="sideMenu">
+                    <a href="#" style="padding:12px 52px;" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Chủ đề</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="clickTitle(this)">Sản phẩm nổi bật</a>
+                        <a href="#" onclick="clickTitle(this)">Sinh nhật</a>
+                        <a href="#" onclick="clickTitle(this)">Tình yêu</a>
+                        <a href="#" onclick="clickTitle(this)">Kỷ niệm</a>
+                        <a href="#" onclick="clickTitle(this)">Cầu hôn</a>
+                        <a href="#" onclick="clickTitle(this)">Chúc mừng</a>
+                        <a href="#" onclick="clickTitle(this)">Cảm ơn</a>
+                        <a href="#" onclick="clickTitle(this)">Chúc sức khoẻ</a>
+                        <a href="#" onclick="clickTitle(this)">Mừng tốt nghiệp</a>
+                        <a href="#" onclick="clickTitle(this)">Xin lỗi</a>
+                    </div>
+                </div>
+                <div class="sideMenu">
+                    <a href="#" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Loại hoa</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="clickTitle(this)">Hoa hồng</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa hướng dương</a>
+                        <a href="#" onclick="clickTitle(this)">Sen đá</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa đồng tiền</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa cúc</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa cẩm chướng</a>
+                    </div>
+                </div>
+                <div class="sideMenu">
+                    <a href="#" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Quà tặng</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="clickTitle(this)">Gấu bông</a>
+                        <a href="#" onclick="clickTitle(this)">Kẹo</a>
+                        <a href="#" onclick="clickTitle(this)">Bánh kem</a>
+                    </div>
+                </div>
+                <div class="sideMenu">
+                    <a href="#" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Hướng dẫn</a>
+
+                </div>
+                <div class="sideMenu">
+                    <a href="LienHe.html" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Liên hệ</a>
+                </div>
+                <div class="sideMenu">
+                    <a href="About_us.html" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Giới thiệu</a>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="headerMenuContent">
+            <ul>
+                <li>
+                    <a style="
+                        padding: 11px 44px;" href="#" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Chủ đề</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="clickTitle(this)">Sản phẩm nổi bật</a>
+                        <a href="#" onclick="clickTitle(this)">Sinh nhật</a>
+                        <a href="#" onclick="clickTitle(this)">Tình yêu</a>
+                        <a href="#" onclick="clickTitle(this)">Kỷ niệm</a>
+                        <a href="#" onclick="clickTitle(this)">Cầu hôn</a>
+                        <a href="#" onclick="clickTitle(this)">Chúc mừng</a>
+                        <a href="#" onclick="clickTitle(this)">Cảm ơn</a>
+                        <a href="#" onclick="clickTitle(this)">Chúc sức khoẻ</a>
+                        <a href="#" onclick="clickTitle(this)">Mừng tốt nghiệp</a>
+                        <a href="#" onclick="clickTitle(this)">Xin lỗi</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#news" style="
+                        padding: 11px 35px;" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">
+                        Loại hoa
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="clickTitle(this)">Hoa hồng</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa hướng dương</a>
+                        <a href="#" onclick="clickTitle(this)">Sen đá</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa đồng tiền</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa cúc</a>
+                        <a href="#" onclick="clickTitle(this)">Hoa cẩm chướng</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" style="
+                        padding: 11px 34px;" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Quà tặng</a>
+
+                    <div class="dropdown-content">
+                        <a href="#" onclick="clickTitle(this)">Gấu bông</a>
+                        <a href="#" onclick="clickTitle(this)">Kẹo</a>
+                        <a href="#" onclick="clickTitle(this)">Bánh kem</a>
+
+                    </div>
+                </li>
+                <!--<li class="dropdown">
+                    <a class="dropbtn" href="#home" style="
+                        padding: 11px 23px;">Hướng dẫn</a>
+                    <div class="dropdown-content">
+                        <a href="#">Hướng dẫn mua hàng</a>
+                        <a href="#">Liên hệ</a>
+                        <a href="#">Xem thêm</a>
+                    </div>
+                </li>-->
+                <li>
+                    <a href="#home" style="
+                        padding: 11px 23px;" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Hướng dẫn</a>
+                </li>
+                <li>
+                    <a href="LienHe.html" style="
+                        padding: 11px 42px;" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Liên hệ</a>
+                </li>
+                <li>
+                    <a href="About_us.html" style="
+                        padding: 11px 27px;" onclick="showorNotShowMenuChildrenWhenClick(this)" onmouseover="showorNotShowMenuChildrenWhenHover(this)">Giới thiệu</a>
+                </li>
+            </ul>
+        </div>
+        <div class="end"></div>
+    </div>
+
+    <!--button lên đầu và style-->
+    <style type="text/css">
+
+        @media screen and (min-width: 960px) {
+
+            .gotoheader {
+                background-color: #008b8b;
+                border: none;
+                outline: none;
+                color: #faf0ff;
+                position: fixed;
+                right: 12px;
+                bottom: 12px;
+                display: none;
+                border-radius: 50%;
+                /*border: solid 1px grey;*/
+                width: 60px;
+                height: 60px;
+                cursor: pointer;
+            }
+        }
+
+        @media screen and (max-width: 960px) and (min-width: 760px) {
+
+            .gotoheader {
+                background-color: #008b8b;
+                border: none;
+                outline: none;
+                color: #faf0ff;
+                position: fixed;
+                right: 12px;
+                bottom: 12px;
+                display: none;
+                border-radius: 50%;
+                /*border: solid 1px grey;*/
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+            }
+
+                .gotoheader i {
+                    font-size: 2rem;
+                }
+        }
+    </style>
+
+    <!--script cua button len dau-->
+    <script type="text/javascript">
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+
+        function scrollFunction() {
+            var scrollButton = document.getElementById("scrollButton")
+            var header = document.getElementsByClassName("header")[0];
+            var searchButton = document.getElementsByClassName("search_button");
+            var shopName = document.getElementById("shopname");
+            var shopSlogan = document.getElementById("slogan");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollButton.style.display = "block";
+                header.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+                header.style.padding = "0 0";
+                //header.style.borderBottom = "1px solid";
+                //header.className = "";
+                //header.style.pointerEvents = "none";
+                //searchButton.pointerEvents = "auto";
+                shopName.style.display = "none";
+                shopSlogan.style.display = "none";
+
+            } else {
+
+                scrollButton.style.display = "none";
+               // header.className = "header";
+                header.style.padding = "20px 0px";
+                header.style.backgroundColor = "white";
+                shopName.style.display = "block";
+                shopSlogan.style.display = "block";
+            }
+
+
+
+
+
+            var allDropDownList = document.getElementsByClassName("dropdown-content");
+            var i = 1;
+            for (i = 0; i < allDropDownList.length; i++) {
+                allDropDownList[i].style.display = "none";
+            }
+        }
+
+
+        function scrollToHeader() {
+            var html = document.getElementsByTagName("html")[0];
+            html.style.scrollBehavior = "smooth"
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0;  // For Chrome, Firefox, IE and Opera
+        }
+
+    </script>
+
+    <!--html của button lên đầu-->
+    <button id="scrollButton" class="gotoheader" onclick="scrollToHeader()">
+        <i class="fas fa-chevron-up fa-3x"></i>
+    </button>
+
+    <!--body và style của body-->
+    <style>
+        /**/
+        @media screen and (min-width: 1024px) {
+            .banner {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: center;
+            }
+
+                .banner:hover .bana {
+                    color: black;
+                    background-color: white;
+                }
+
+                    .banner:hover .bana i {
+                        color: black;
+                    }
+
+            .bana {
+                text-decoration: none;
+                font-size: 50px;
+                font-weight: bolder;
+                z-index: 0;
+                cursor: pointer;
+                background-color: rgba(200,200,200,0.7);
+                width: 50px;
+                height: 50px;
+                color: rgba(255,255,255,0.7);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .bana:hover {
+                    background-color: #d4ade7;
+                    color: white;
+                }
+
+            .body {
+                padding: 10px 10%;
+            }
+
+                .body > .banner {
+                    min-width: 100%;
+                    height: auto;
+                    background-color: white;
+                    border-radius: 5px;
+                    display: flex;
+                    flex-flow: wrap row;
+                    align-items: center;
+                    overflow: hidden;
+                }
+
+                    .body > .banner > img {
+                        width: 100%;
+                        height: auto;
+                        background-color: #E3E3E3;
+                        border: 0;
+                        outline: 0;
+                        margin-left: -50px;
+                        margin-right: -50px;
+                    }
+
+                .body > .grid {
+                    margin-top: 10px;
+                    background-color: white;
+                    padding: 40px 30px;
+                    padding-bottom: 20px;
+                    border-radius: 5px;
+                }
+
+                    .body > .grid > .gridTitle {
+                        font-size: 35px;
+                        color: #484c7f;
+                        font-family: 'Quicksand', sans-serif;
+                        font-weight: 400;
+                        cursor: pointer;
+                        width: 400px;
+                        min-height: 25px;
+                        margin-bottom: 5px;
+                        /*border-radius: 5px;*/
+                    }
+
+                        .body > .grid > .gridTitle:hover {
+                            color: #8185b8;
+                        }
+
+                    .body > .grid > .gridContent {
+                        background-color: #ffffff;
+                        display: flex;
+                        flex-wrap: wrap;
+                        padding: 0 0;
+                        justify-content: space-between;
+                        margin-bottom: 0;
+                    }
+
+                    .body > .grid > .gridMore {
+                        text-align: center;
+                    cursor: pointer;
+                        font-size: 30px;
+                        color: #484c7f;
+                        background-color: #fff;
+                        margin-top: 10px;
+                        padding: 5px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        font-family: 'Comfortaa', cursive;
+                        font-weight: bolder;
+                    }
+
+                        .body > .grid > .gridMore :hover {
+                            color: #a2a2a2;
+                        }
+
+                    .body > .grid > .gridContent > .item {
+                        width: 250px;
+                        text-align: center;
+                        display: flex;
+                        flex-flow: column wrap;
+                        min-height: 300px;
+                        justify-content: flex-end;
+                        margin: 15px 0;
+                    }
+
+            .itemId {
+                display: none;
+            }
+
+            .body > .grid > .gridContent > .item > .itemImg {
+                height: 180px;
+                width: 180px;
+                border: none;
+                background-color: #ffcccc;
+                margin-left: auto;
+                margin-right: auto;
+                align-self: flex-start;
+            }
+
+                .body > .grid > .gridContent > .item > .itemImg:hover {
+                    cursor: pointer;
+                }
+
+                .body > .grid > .gridContent > .item > .itemImg > img {
+                    width: 100%;
+                    border: none;
+                    width: 100%;
+                    height: 100%;
+                }
+
+            .body > .grid > .gridContent > .item > .itemName {
+                font-size: 18px;
+                color: #444444;
+                height: 35px;
+                font-family: 'Quicksand';
+                font-weight: 800;
+                padding: 10px 0;
+            }
+
+                .body > .grid > .gridContent > .item > .itemName:hover {
+                    color: #6f6f6f;
+                    cursor: pointer;
+                }
+
+                .body > .grid > .gridContent > .item > .itemName:active {
+                    color: #c2c0c0;
+                }
+
+                .body > .grid > .gridContent > .item > .itemName > a {
+                    text-decoration: none;
+                }
+
+            .body > .grid > .gridContent > .item > .itemPrice {
+                font-size: 25px;
+                font-weight: lighter;
+                font-family: 'Roboto';
+                color: #727272;
+                padding: 5px 0;
+            }
+
+                .body > .grid > .gridContent > .item > .itemPrice:hover {
+                    cursor: default;
+                }
+
+            .body > .grid > .gridContent > .item > .addToCart {
+                font-size: 18px;
+                background-color: #f1d0ff;
+                padding: 10px;
+                color: #008b8b;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+
+                .body > .grid > .gridContent > .item > .addToCart:hover {
+                    background-color: #eec4ff;
+                    cursor: pointer;
+                }
+
+                .body > .grid > .gridContent > .item > .addToCart:active {
+                    background-color: #ebb9ff;
+                }
+
+            .body > .grid > .gridContent > .item > .addToCart-mb {
+                display: none;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .display:active {
+            }
+
+
+
+            /*phần preload*/
+
+
+
+            .preload > .body {
+                /*background-color: #FFFFFF;*/
+                padding: 10px 150px;
+            }
+
+                .preload > .body > .banner {
+                    min-width: 100%;
+                    height: 600px;
+                    background-color: white;
+                    border-radius: 5px;
+                    display: flex;
+                    flex-flow: wrap row;
+                    justify-content: center;
+                    align-content: center;
+                }
+
+                    .preload > .body > .banner > img {
+                        width: 800px;
+                        height: 500px;
+                        background-color: #E3E3E3;
+                        border: 0;
+                        outline: 0;
+                    }
+
+                .preload > .body > .grid {
+                    margin-top: 10px;
+                    background-color: white;
+                    padding: 40px 30px;
+                    padding-bottom: 20px;
+                    border-radius: 5px;
+                }
+
+                    .preload > .body > .grid > .gridTitle {
+                        background-color: #E3E3E3;
+                        width: 400px;
+                        min-height: 25px;
+                        /*border-radius: 5px;*/
+                        margin-bottom: 5px;
+                    }
+
+                    .preload > .body > .grid > .gridContent {
+                        /*width: 400px;*/
+                        min-height: 40px;
+                        /*border-radius: 5px;*/
+                        display: flex;
+                        flex-wrap: wrap;
+                        padding: 0 0;
+                        justify-content: space-between;
+                        margin-bottom: 0;
+                    }
+
+            .itemId {
+                display: none;
+                /*border-radius: 5px;*/
+            }
+
+            .preload > .body > .grid > .gridContent > .item {
+                background-color: #fff;
+                /*width: 400px;*/
+                min-height: 40px;
+                /*border-radius: 5px;*/
+                width: 250px;
+                text-align: center;
+                display: flex;
+                flex-flow: column wrap;
+                min-height: 300px;
+                justify-content: flex-end;
+                align-items: center;
+                margin: 15px 0;
+            }
+
+                .preload > .body > .grid > .gridContent > .item > .itemImg {
+                    /*Mockup propertise*/
+                    height: 180px;
+                    width: 180px;
+                    border: none;
+                    /*Real Propertise*/
+                    background-color: #E3E3E3;
+                    margin-left: auto;
+                    margin-right: auto;
+                    justify-self: flex-start;
+                }
+
+                .preload > .body > .grid > .gridContent > .item > .itemName {
+                    margin-top: 10px;
+                    background-color: #E3E3E3;
+                    height: 12px;
+                    width: 150px;
+                }
+
+                .preload > .body > .grid > .gridContent > .item > .itemPrice {
+                    height: 16px;
+                    width: 125px;
+                    margin-top: 10px;
+                    background-color: #E3E3E3;
+                    font-weight: lighter;
+                    /**/
+                }
+
+                .preload > .body > .grid > .gridContent > .item > .addToCart {
+                    margin-top: 10px;
+                    width: 180px;
+                    font-size: 18px;
+                    background-color: #E3E3E3;
+                    padding: 6px 0;
+                    color: #008b8b;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    /**/
+                }
+
+            .body > .grid > .gridContent > .item > .addToCart-mb {
+                display: none;
+            }
+
+            .preload > .body > .grid > .gridMore {
+                text-align: center;
+                font-weight: 700;
+                font-size: 20px;
+            }
+        }
+
+        @media screen and (min-width: 960px) and (max-width:1024px) {
+            .banner {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: center;
+            }
+
+                .banner:hover .bana {
+                    color: black;
+                    background-color: white;
+                }
+
+                    .banner:hover .bana i {
+                        color: black;
+                    }
+
+            .bana {
+                text-decoration: none;
+                font-size: 50px;
+                font-weight: bolder;
+                z-index: 0;
+                cursor: pointer;
+                background-color: rgba(200,200,200,0.7);
+                width: 50px;
+                height: 50px;
+                color: rgba(255,255,255,0.7);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .bana:hover {
+                    background-color: #d4ade7;
+                    color: white;
+                }
+
+            .body {
+                padding: 10px 10%;
+            }
+
+                .body > .banner {
+                    min-width: 100%;
+                    height: auto;
+                    background-color: white;
+                    border-radius: 5px;
+                    display: flex;
+                    flex-flow: wrap row;
+                    align-items: center;
+                    overflow: hidden;
+                }
+
+                    .body > .banner > img {
+                        width: 100%;
+                        height: auto;
+                        background-color: #E3E3E3;
+                        border: 0;
+                        outline: 0;
+                        margin-left: -50px;
+                        margin-right: -50px;
+                    }
+
+                .body > .grid {
+                    margin-top: 10px;
+                    background-color: white;
+                    padding: 40px 30px;
+                    padding-bottom: 20px;
+                    border-radius: 5px;
+                }
+
+                    .body > .grid > .gridTitle {
+                        font-size: 35px;
+                        color: #484c7f;
+                        font-family: 'Quicksand', sans-serif;
+                        font-weight: 400;
+                        cursor: pointer;
+                        width: 400px;
+                        min-height: 25px;
+                        margin-bottom: 5px;
+                        /*border-radius: 5px;*/
+                    }
+
+                        .body > .grid > .gridTitle:hover {
+                            color: #8185b8;
+                        }
+
+                    .body > .grid > .gridContent {
+                        background-color: #ffffff;
+                        display: flex;
+                        flex-wrap: wrap;
+                        padding: 0 0;
+                        justify-content: space-between;
+                        margin-bottom: 0;
+                    }
+
+                    .body > .grid > .gridMore {
+                        text-align: center;
+                        cursor: pointer;
+                        font-size: 30px;
+                        color: #484c7f;
+                        background-color: #fff;
+                        margin-top: 10px;
+                        padding: 5px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        font-family: 'Comfortaa', cursive;
+                        font-weight: bolder;
+                    }
+
+                        .body > .grid > .gridMore :hover {
+                            color: #a2a2a2;
+                        }
+
+                    .body > .grid > .gridContent > .item {
+                        width: 300px;
+                        text-align: center;
+                        display: flex;
+                        flex-flow: column wrap;
+                        min-height: 300px;
+                        justify-content: flex-end;
+                        margin: 15px 0;
+                    }
+
+            .itemId {
+                display: none;
+            }
+
+            .body > .grid > .gridContent > .item > .itemImg {
+                height: 250px;
+                width: 250px;
+                border: none;
+                background-color: #ffcccc;
+                margin-left: auto;
+                margin-right: auto;
+                align-self: flex-start;
+            }
+
+                .body > .grid > .gridContent > .item > .itemImg:hover {
+                    cursor: pointer;
+                }
+
+                .body > .grid > .gridContent > .item > .itemImg > img {
+                    width: 100%;
+                    border: none;
+                    width: 100%;
+                    height: 100%;
+                }
+
+            .body > .grid > .gridContent > .item > .itemName {
+                font-size: 18px;
+                color: #444444;
+                height: 35px;
+                font-family: 'Quicksand';
+                font-weight: 800;
+                padding: 10px 0;
+            }
+
+                .body > .grid > .gridContent > .item > .itemName:hover {
+                    color: #6f6f6f;
+                    cursor: pointer;
+                }
+
+                .body > .grid > .gridContent > .item > .itemName:active {
+                    color: #c2c0c0;
+                }
+
+                .body > .grid > .gridContent > .item > .itemName > a {
+                    text-decoration: none;
+                }
+
+            .body > .grid > .gridContent > .item > .itemPrice {
+                font-size: 25px;
+                font-weight: lighter;
+                font-family: 'Roboto';
+                color: #727272;
+                padding: 5px 0;
+            }
+
+                .body > .grid > .gridContent > .item > .itemPrice:hover {
+                    cursor: default;
+                }
+
+            .body > .grid > .gridContent > .item > .addToCart {
+                font-size: 18px;
+                background-color: #f1d0ff;
+                padding: 10px;
+                color: #008b8b;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+
+                .body > .grid > .gridContent > .item > .addToCart:hover {
+                    background-color: #eec4ff;
+                    cursor: pointer;
+                }
+
+                .body > .grid > .gridContent > .item > .addToCart:active {
+                    background-color: #ebb9ff;
+                }
+
+            .body > .grid > .gridContent > .item > .addToCart-mb {
+                display: none;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .display:active {
+            }
+
+
+
+            /*phần preload*/
+
+
+
+            .preload > .body {
+                /*background-color: #FFFFFF;*/
+                padding: 10px 150px;
+            }
+
+                .preload > .body > .banner {
+                    min-width: 100%;
+                    height: 600px;
+                    background-color: white;
+                    border-radius: 5px;
+                    display: flex;
+                    flex-flow: wrap row;
+                    justify-content: center;
+                    align-content: center;
+                }
+
+                    .preload > .body > .banner > img {
+                        width: 800px;
+                        height: 500px;
+                        background-color: #E3E3E3;
+                        border: 0;
+                        outline: 0;
+                    }
+
+                .preload > .body > .grid {
+                    margin-top: 10px;
+                    background-color: white;
+                    padding: 40px 30px;
+                    padding-bottom: 20px;
+                    border-radius: 5px;
+                }
+
+                    .preload > .body > .grid > .gridTitle {
+                        background-color: #E3E3E3;
+                        width: 400px;
+                        min-height: 25px;
+                        /*border-radius: 5px;*/
+                        margin-bottom: 5px;
+                    }
+
+                    .preload > .body > .grid > .gridContent {
+                        /*width: 400px;*/
+                        min-height: 40px;
+                        /*border-radius: 5px;*/
+                        display: flex;
+                        flex-wrap: wrap;
+                        padding: 0 0;
+                        justify-content: space-between;
+                        margin-bottom: 0;
+                    }
+
+            .itemId {
+                display: none;
+                /*border-radius: 5px;*/
+            }
+
+            .preload > .body > .grid > .gridContent > .item {
+                background-color: #fff;
+                /*width: 400px;*/
+                min-height: 40px;
+                /*border-radius: 5px;*/
+                width: 250px;
+                text-align: center;
+                display: flex;
+                flex-flow: column wrap;
+                min-height: 300px;
+                justify-content: flex-end;
+                align-items: center;
+                margin: 15px 0;
+            }
+
+                .preload > .body > .grid > .gridContent > .item > .itemImg {
+                    /*Mockup propertise*/
+                    height: 180px;
+                    width: 180px;
+                    border: none;
+                    /*Real Propertise*/
+                    background-color: #E3E3E3;
+                    margin-left: auto;
+                    margin-right: auto;
+                    justify-self: flex-start;
+                }
+
+                .preload > .body > .grid > .gridContent > .item > .itemName {
+                    margin-top: 10px;
+                    background-color: #E3E3E3;
+                    height: 12px;
+                    width: 150px;
+                }
+
+                .preload > .body > .grid > .gridContent > .item > .itemPrice {
+                    height: 16px;
+                    width: 125px;
+                    margin-top: 10px;
+                    background-color: #E3E3E3;
+                    font-weight: lighter;
+                    /**/
+                }
+
+                .preload > .body > .grid > .gridContent > .item > .addToCart {
+                    margin-top: 10px;
+                    width: 180px;
+                    font-size: 18px;
+                    background-color: #E3E3E3;
+                    padding: 6px 0;
+                    color: #008b8b;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    /**/
+                }
+
+            .body > .grid > .gridContent > .item > .addToCart-mb {
+                display: none;
+            }
+
+            .preload > .body > .grid > .gridMore {
+                text-align: center;
+                font-weight: 700;
+                font-size: 20px;
+            }
+        }
+    </style>
+
+
+
+    <!--html của body-->
+    <div class="body">
+        <div class="banner" style="margin-bottom: 20px;">
+            <a class="bana" onclick="changeBanner()" style="">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            <img />
+            <a class="bana" onclick="changeBanner()">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <!--<div style="display: flex; flex-flow:row; justify-content:center;">
+                <div class="bana" onclick="changeBanner()">&lt;</div>
+                <div>&nbsp;</div>
+                <div class="bana" onclick="changeBanner()">&gt;</div>
+            </div>-->
+        </div>        
+        <div class="grid">
+            <!--hàng 1-->
+            <div class="gridTitle"></div>
+            <!-- hàng 2-->
+            <div style="" class="gridContent">
+                <!--hình ảnh 1-->
+                <div class="item">
+                    <div class="itemId">&nbsp;</div>
+                    <div class="itemImg">&nbsp;</div>
+                    <div class="itemName">&nbsp;</div>
+                    <div class="itemPrice">&nbsp;</div>
+                    <div class="addToCart">&nbsp;</div>
+                    <div class="addToCart-mb">&nbsp;</div>
+                </div>
+
+                <!--hình ảnh 2-->
+                <div class="item">
+                    <div class="itemId">&nbsp;</div>
+                    <div class="itemImg">&nbsp;</div>
+                    <div class="itemName">&nbsp;</div>
+                    <div class="itemPrice">&nbsp;</div>
+                    <div class="addToCart">&nbsp;</div>
+                    <div class="addToCart-mb">&nbsp;</div>
+                </div>
+                <!--hình ảnh 3-->
+                <div class="item">
+                    <div class="itemId">&nbsp;</div>
+                    <div class="itemImg">&nbsp;</div>
+                    <div class="itemName">&nbsp;</div>
+                    <div class="itemPrice">&nbsp;</div>
+                    <div class="addToCart">&nbsp;</div>
+                    <div class="addToCart-mb">&nbsp;</div>
+                </div>
+                <!--hình ảnh 4-->
+
+            </div>
+            <!--hàng 3-->
+            <!--<div class="gridMore" onclick="themItem(this)">
+                <div>+</div>
+            </div>-->
+        </div>
+    </div>
+
+    <!--footer và style của footer-->
+    <style type="text/css">
+        .wrapperFtr {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-flow: wrap;
+            justify-content: space-between;
+        }
+
+        .itemFtr {
+            padding: 0 0rem;
+            text-align: left;
+        }
+
+        .containerFtr {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .footer {
+            background-color: #faf0ff;
+            padding: 10px 150px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #008b8b;
+        }
+
+        .itemFtr ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .itemFtr ul li {
+                padding: 5px 0;
+            }
+
+                .itemFtr ul li a {
+                    text-decoration: none;
+                    color: #008b8b;
+                }
+
+        .socialFtr {
+            margin: 1rem;
+            color: #008b8b;
+        }
+
+        .siteFtr {
+            text-decoration: none;
+            color: #008b8b;
+        }
+
+            .siteFtr:hover {
+                box-shadow: inset 0 -30px 0 0 white;
+                /*color:#f56e6e;*/
+            }
+    </style>
+
+    <!--html của footer-->
+    <div class="footer">
+        <div class="containerFtr">
+            <!--thông tin liên hệ-->
+            <div class="wrapperFtr">
+                <div class="itemFtr">
+                    <h3>Liên hệ</h3>
+                    <ul>
+                        <li>
+                            <a href="About_us.html">Về chúng tôi</a>
+
+                        </li>
+                        <li>
+                            Nói về chúng tôi
+
+                        </li>
+                        <li>
+                            Đánh giá từ khách hàng
+
+                        </li>
+
+                        <li>
+                            Doanh nghiệp
+
+                        </li>
+                        <li>
+                            Hướng dẫn chăm sóc hoa
+
+                        </li>
+                        <li>
+                            Blog
+
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="itemFtr">
+                    <h3>Chăm sóc khách hàng</h3>
+                    <ul>
+                        <li>
+                            Liên hệ với chúng tôi
+
+                        </li>
+                        <li>
+                            Câu hỏi thường gặp
+
+                        </li>
+                        <li>
+                            Phương thức thanh toán
+
+                        </li>
+                        <li>
+                            Chính sách đổi trả
+
+                        </li>
+                        <li>
+                            Chính sách bảo mật
+
+                        </li>
+                        <li>Các điều khoản khác</li>
+                    </ul>
+                </div>
+                <div class="itemFtr">
+                    <h3>Bạn có câu hỏi?</h3>
+                    <ul>
+                        <li>
+                            Thứ 2-6 (8AM-8PM)<br />
+                            Thứ 7 & CN (9AM-6PM)
+
+
+                        </li>
+                        <li>
+                            Hotline: 1900 63 35 37
+
+                        </li>
+                        <li>
+                            Facebook: davuflower.vn
+
+                        </li>
+                        <li>
+                            Email: contact@davuflower.vn
+
+
+                        </li>
+                        <li>
+                            Doanh nghiệp:<br />
+                            corporate@davuflower.vn
+
+
+                        </li>
+                        <li>Marketing: marketing@davuflower.vn</li>
+                    </ul>
+                </div>
+
+            </div>
+            <!--các mạng xã hội-->
+            <div>
+                <p>
+                    <hr style="border:1px solid #008b8b" />
+                    <a href="#" class="socialFtr"><i class="fab fa-youtube fa-2x"></i></a>
+                    <a href="#" class="socialFtr"><i class="fab fa-facebook-square fa-2x"></i></a>
+                    <a href="#" class="socialFtr"><i class="fab fa-facebook-messenger fa-2x"></i></a>
+                    <a href="#" class="socialFtr"><i class="fab fa-instagram fa-2x"></i></a>
+                    <hr style="border:1px solid #008b8b" />
+                </p>
+            </div>
+            <!--địa chỉ trang web, bản quyền,...-->
+            <div>
+                <span>&copy; 2019 <a href="#" class="siteFtr">davuflower.vn</a> </span>
+            </div>
+        </div>
+    </div>
+
+    <!--phan code hidden-->
+
+    <form id="frmChiTiet" action="chitietsanpham.html" style="display:none;">
+        <input type="text" value="" name="idSanPham" />
+        <input type="submit" name="subChiTiet" />
+    </form>
+
+    <form id="frmDanhMuc" action="danhmucsanpham.html" style="display:none">
+        <input type="text" value="" name="idDanhMuc" />
+        <input type="submit" name="subDanhMuc" />
+    </form>
+
+    <!--phần js load data va xu ly nguyen trang-->
+
+    <script type="text/javascript">
+
+                function detectmob() {
+         if( navigator.userAgent.match(/Android/i)
+         || navigator.userAgent.match(/webOS/i)
+         || navigator.userAgent.match(/iPhone/i)
+         || navigator.userAgent.match(/iPad/i)
+         || navigator.userAgent.match(/iPod/i)
+         || navigator.userAgent.match(/BlackBerry/i)
+         || navigator.userAgent.match(/Windows Phone/i)
+         ){
+            return true;
+          }
+         else {
+            return false;
+          }
+        }
+
+        makeResponsive();
+        function makeResponsive() {
+            if (detectmob()) {
+                var theWidth = document.body.getBoundingClientRect().width;
+                if (theWidth == 964) {
+                    document.getElementsByClassName("shopping-cart")[0].style.marginLeft = '0';
+                }
+            }
+        }
+
+
+
+
+        new WOW().init();
+
+        preloadData();
+
+
+
+
+
+
+        function preloadData() {
+            var gridContent = document.getElementsByClassName("gridContent")[0];
+            var item = gridContent.getElementsByClassName("item")[0];
+            var itemRect = item.getBoundingClientRect();
+            var gridContentRect = gridContent.getBoundingClientRect();
+
+            var numberOfItemOnRow = (Math.floor(gridContentRect.width / itemRect.width));
+
+
+            var spaceBetweenItems = (gridContentRect.width - numberOfItemOnRow * itemRect.width) / (numberOfItemOnRow - 1);
+            var spaceRate = spaceBetweenItems / gridContentRect.width;
+            if (spaceRate < 0.04)
+                numberOfItemOnRow = numberOfItemOnRow - 1;
+
+
+            //mobile version
+            //if (numberOfItemOnRow <= 2)
+            //    alert(numberOfItemOnRow + " " + window.outerWidth + " " + window.innerWidth);
+
+            //alert(numberOfItemOnRow);
+            gridContent.innerHTML = "";
+            for (var i = 0; i < numberOfItemOnRow; i++) {
+                var newItem = document.createElement("div");
+                newItem.className = "item";
+                newItem.innerHTML += item.innerHTML;
+                gridContent.appendChild(newItem);
+            }
+        }
+
+        function countItemOnRow() {
+            var gridContent = document.getElementsByClassName("gridContent")[0];
+            var item = gridContent.getElementsByClassName("item")[0];
+            var itemRect = item.getBoundingClientRect();
+            var gridContentRect = gridContent.getBoundingClientRect();
+
+            var numberOfItemOnRow = (Math.floor(gridContentRect.width / itemRect.width));
+
+
+            var spaceBetweenItems = (gridContentRect.width - numberOfItemOnRow * itemRect.width) / (numberOfItemOnRow - 1);
+            var spaceRate = spaceBetweenItems / gridContentRect.width;
+
+            return numberOfItemOnRow;
+        }
+        function loadedData() {
+            var preloadDiv = document.getElementsByClassName("preload")[0];
+            preloadDiv.className = '';
+
+            var gridContentDau = document.getElementsByClassName("gridContent")[0];
+            var gridContentDauLength = gridContentDau.children.length;
+            for (var i = 0; i < gridContentDauLength; i++) {
+                var itemId = gridContentDau.children[0].children[0].innerHTML;
+                if (itemId == '&nbsp;') {
+                    gridContentDau.removeChild(gridContentDau.children[0]);
+                }
+            }
+
+        }
+
+
+
+
+        function changeBanner() {
+            var imgRoot = document.getElementsByClassName("banner")[0].getElementsByTagName("img")[0];
+            var srcPath = imgRoot.src;
+            if (srcPath.includes("1.png")) {
+                //img.src = banners[1];
+                var afterBanner = banners[1];
+            }
+            else {
+                //img.src = banners[0];
+                var afterBanner = banners[0];
+            }
+
+            document.getElementsByClassName("banner")[0].removeChild(imgRoot);
+            var lastChild = document.getElementsByClassName("banner")[0].children[1];
+            //document.getElementsByClassName("banner")[0].removeChild(lastChild);
+            document.getElementsByClassName("banner")[0].insertBefore(afterBanner, lastChild);
+            //document.getElementsByClassName("banner")[0].appendChild(lastChild);
+        }
+
+
+        var imgs = [];
+        var imgsTaken = [];
+        var product;
+        var category;
+        var gift;
+        var loadHomePage = 0;
+        var localStorage = window.localStorage;
+        var cart = [];
+        var itemOnRow;
+
+        $(document).ready(function () {
+            if (reload()) {
+                loadPage();
+                $(document).load('index.html #body');
+            }
+        });
+
+        window.onresize = function (e) {
+            let grid = $('.grid')
+            for (var i = 0; i < $(grid).length; i++) {
+                removeNullItem($(grid).eq(i).find('.gridContent').eq(0))
+            }
+            itemOnRow = countItemOnRow();
+            for (var i = 0; i < $(grid).length; i++) {
+                addNullItem(itemOnRow - $(grid).eq(i).find('.gridContent').eq(0).children().length % itemOnRow, $(grid).find('.gridContent').eq(i))
+            }
+        };
+
+
+        function reload() {
+            if (loadHomePage == 0) {
+                loadHomePage == 1;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        var bannersLink = ['AllImages/banner 1.png', 'AllImages/banner 2.png'];
+        var banners = [];
+        function loadBanners() {
+
+            var imgRoot = document.getElementsByClassName("banner")[0].getElementsByTagName("img")[0];
+            imgRoot.src = bannersLink[0];
+            banners.push(imgRoot);
+            for (var i = 1; i < bannersLink.length; i++) {
+                var imgBanner = document.createElement("img");
+                imgBanner.src = bannersLink[i];
+                banners.push(imgBanner);
+            }
+
+        }
+
+        function loadPage() {
+
+            //var img = document.getElementsByClassName("banner")[0].getElementsByTagName("img")[0];
+            //img.src = banners[0];
+            loadBanners();
+
+            
+
+            $.ajax({
+                type: 'GET',
+                url: 'data/data_sanpham.json',
+                dataType: 'json',
+                success: function (json) {
+                    product = json
+                    $.ajax({
+                        type: 'GET',
+                        url: 'data/data_quatangkem.json',
+                        dataType: 'json',
+                        success: function (json) {
+                            gift = json
+
+                            $.ajax({
+                                type: 'GET',
+                                url: 'data/data_homepage.json',
+                                dataType: 'json',
+                                variable: 'category',
+                                callback: 'function () { loadHomepage(product) }',
+                                success: function (json) {
+                                    category = json
+                                    loadImageToRam(product, gift);
+                                    loadHomepage(product);
+                                    loadedData();
+                                    addEventTitle();
+                                }
+                            })
+                        }
+                    })
+                }
+            });
+
+
+        }
+
+
+
+        function loadImageToRam(products,gifts) {
+            var productsLength = products.length;
+
+
+            for (var i = 0; i < productsLength; i++)
+            {
+                var img = document.createElement("img");
+                img.src = 'data' + products[i].imgLink;
+                logImg(img);
+                imgs.push(img);
+                imgsTaken.push(false);
+            }
+
+            var giftLength = gifts.length
+            for (var i = 0; i < giftLength; i++)
+            {
+                var img = document.createElement("img");
+                img.src = 'data' + gifts[i].imgLink;
+                logImg(img);
+                imgs.push(img);
+                imgsTaken.push(false);
+            }
+
+        }
+
+        function logImg(theMyImg) {
+            theMyImg.onload = function () {
+                console.log(theMyImg.src);
+            }
+        }
+
+        function addEventTitle() {
+            var gridTitles = document.getElementsByClassName("gridTitle");
+            var grLen = gridTitles.length;
+            for (var i = 0; i < grLen; i++) {
+                gridTitles[i].setAttribute('onclick', 'clickTitle(this)');
+            }
+
+        }
+
+        function clickTitle(title) {
+            var idDanhMuc = title.innerHTML;
+            //
+            frmDanhMuc.idDanhMuc.value = idDanhMuc;
+            frmDanhMuc.subDanhMuc.click();
+        }
+
+        function loadHomepage(product) {
+            let firstGrid = true;
+            category.forEach(function (e) {
+                if (firstGrid) {
+                    firstGrid = false;
+                    buildFirstGrid(e);
+
+                } else {
+                    let body = $("body");
+                    let grid = $("<div class='grid'></div>").insertAfter($(".grid").eq($(".grid").length - 1));
+
+                    let gridTitle = $("<div class='gridTitle'></div>");
+                    $(gridTitle).text(e.title).appendTo(grid);
+                    setTitleStyle(gridTitle)
+
+                    gridContent = $("<div class='gridContent'></div>");
+                    $(gridContent).insertAfter(gridTitle);
+
+                    addItem1(e.items, gridContent, product);
+                }
+            })
+        }
+
+        function moreItem(x) {
+            let lastGridTitleText = $(x).parent().find(".gridTitle").eq(0).text();
+            let gridContent = $(x).parent().find(".gridContent");
+            removeNullItem($(gridContent))
+            let lastAddedItem = $(gridContent).eq(0).find(".item").last();
+            let lastAddedItemId = $(lastAddedItem).find(".itemId").text();
+
+            var array;
+            category.forEach(function (x) {
+                if (x.title.includes(lastGridTitleText)) {
+                    array = x.items
+                }
+            });
+            console.log("jQuery.inArray(lastAddedItemId, array): " + jQuery.inArray(lastAddedItemId, array))
+
+            if (jQuery.inArray(lastAddedItemId, array)) {
+
+                var val = lastAddedItemId;
+                var index;
+                array.find(function (item, i) {
+                    if (item === val) {
+                        index = i;
+                        return;
+                    }
+                });
+
+                var cloneArray = array.slice();
+                var productId = cloneArray.splice(index + 1);
+
+                addItem2(productId, gridContent, product, $(x).parent());
+            }
+        }
+
+        function removeNullItem(gridContent) {
+            var item = $(gridContent).find('.item')
+            for (var i = 0; i < item.length; i++) {
+                if ($(item).eq(i).text() === '') {
+                    $(item).eq(i).remove();
+                }
+            }
+        }
+
+        function addNullItem(num, gridContent) {
+            if (num < itemOnRow) {
+                for (var i = 0; i < num; i++) {
+                    $('<div class="item"></div>').appendTo(gridContent);
+                    console.log('added NullItem')
+                }
+            }
+        }
+
+        function getProductIdByCategory(lastGridTitleText, array) {
+            category.forEach(function (x) {
+                if (x.title.includes(lastGridTitleText)) {
+                    array = new Array(x.items);
+                }
+            });
+            return array;
+        }
+
+        function buildFirstGrid(e) {
+            let grid = $(".grid")
+
+            let gridTitle = $(grid).eq(0).find(".gridTitle")
+            $(gridTitle).eq(0).text(e.title);
+            setTitleStyle(gridTitle)
+
+            gridContent = $(grid).eq(0).find(".gridContent")
+            var productId = e.items;
+
+            itemOnRow = countItemOnRow();
+
+            $(gridContent).empty();
+
+            addItem1(productId, gridContent, product);
+        }
+
+        function setTitleStyle(gridTitle) {
+            $(gridTitle).css("background-color", "transparent");
+        }
+
+        function addItem2(productId, gridContent, product, grid) {
+            var showItem = $(gridContent).find('.item').length%itemOnRow - itemOnRow
+            if (showItem == -(itemOnRow)) showItem = 0;
+            console.log("showItem: " + showItem)
+            console.log("productId.length: " + productId.length)
+            for (var i = 0; i < productId.length && showItem < itemOnRow; i++ , showItem++) {
+                var item = $("<div class='item'></item>").appendTo(gridContent);
+                let id = $("<div class='itemId'></div>").text(productId[i]).appendTo(item)
+
+                if (productId[i].includes("sp")) {
+                    for (let j = 0; j < product.length && showItem < itemOnRow; j++) {
+                        if (product[j].id.includes(productId[i])) {
+                            addProductItemAttr(item, j);
+                            break;
+                        }
+                    }
+                }
+
+                if (productId[i].includes("qt")) {
+                    for (let j = 0; j < gift.length && showItem < itemOnRow; j++) {
+                        if (gift[j].id.includes(productId[i])) {
+                            addGiftItemAttr(item, j)
+                            break;
+                        }
+                    }
+                }
+                addWatchMore2(grid, gridContent, i, productId.length);
+                removeItemBackGroundColor(item)
+            }
+        }
+
+        function addProductItemAttr(item, j) {
+            //let img = $("<img></img>").attr("src", "data" + product[j].imgLink);
+            //$("<div class='itemImg'></div>").append(img).appendTo(item)
+            var itemImg = findImgInImgs(product[j], imgs, imgsTaken);
+            if (itemImg != null)
+                $("<div class='itemImg'></div>").append(itemImg).appendTo(item)
+            $("<div class='itemName' onclick='openDetailLink(this)'></div>").text(product[j].title).appendTo(item)
+            $("<div class='itemPrice'></div>").text(product[j].price).appendTo(item)
+            $("<div class='addToCart' onclick='addToCart(this)'></div>").html("Thêm Vào Giỏ").appendTo(item)
+            $("<div class='addToCart-mb' onclick='addToCart(this)'></div>").html("Thêm").appendTo(item)
+        }
+
+        function findImgInImgs(product, myIMGS, myIMGStaken) {
+            for (var i = 0; i < myIMGS.length; i++) {
+                if (myIMGS[i].src.includes(product.imgLink)) {
+
+                    if (myIMGStaken[i] == false) {
+                        myIMGStaken[i] = true;
+                        var myImgGotten = myIMGS[i];
+                    }
+                    else {
+                        var myImgGotten = document.createElement("img");
+                        myImgGotten.src = myIMGS[i].src;
+                    }
+
+                    return myImgGotten;
+                }
+
+            }
+            return null
+        }
+
+        function addGiftItemAttr(item, j) {
+            var itemImg = findImgInImgs(gift[j], imgs, imgsTaken);
+            if (itemImg != null)
+                $("<div class='itemImg'></div>").append(itemImg).appendTo(item)
+            $("<div class='itemName' onclick='openDetailLink(this)'></div>").text(gift[j].title).appendTo(item)
+            $("<div class='itemPrice'></div>").text(gift[j].price).appendTo(item)
+            $("<div class='addToCart' onclick='addToCart(this)'></div>").html("Thêm Vào Giỏ").appendTo(item)
+            $("<div class='addToCart-mb' onclick='addToCart(this)'></div>").html("Thêm").appendTo(item)
+        }
+
+        function addItem1(productId, gridContent, product) {
+            for (var i = 0, showItem = 0; i < productId.length && showItem < itemOnRow; i++ , showItem++) {
+                var item = $("<div class='item'></item>").appendTo(gridContent);
+                let id = $("<div class='itemId'></div>").text(productId[i]).appendTo(item)
+
+                if (productId[i].includes("sp")) {
+                    for (let j = 0; j < product.length && showItem < itemOnRow; j++) {
+                        if (product[j].id.includes(productId[i])) {
+                            addProductItemAttr(item, j);
+                            break;
+                        }
+                    }
+                }
+
+                if (productId[i].includes("qt")) {
+                    for (let j = 0; j < gift.length && showItem < itemOnRow; j++) {
+                        if (gift[j].id.includes(productId[i])) {
+                            addGiftItemAttr(item, j)
+                            break;
+                        }
+                    }
+                }
+
+                removeItemBackGroundColor(item)
+            }
+            if (productId.length > itemOnRow) {
+                addWatchMore1(null, gridContent);
+            }
+            if (productId.length < itemOnRow) {
+                addNullItem(itemOnRow - productId.length, gridContent)
+            }
+        }
+
+        function addWatchMore1(previousGrid, gridContent) {
+            let previousGridMore = $(previousGrid).find(".gridMore").eq(0).html()
+            if (previousGridMore === undefined) {
+                let watchMore = $("<div></div>").text("+")
+                $("<div class='gridMore' onclick='moreItem(this)'></div>").append(watchMore).insertAfter(gridContent)
+            }
+        }
+
+        function addWatchMore2(previousGrid, gridContent, lastIndex, length) {
+            console.log("length: " + length);
+            console.log('itemOnRow: ' + itemOnRow)
+
+            let previousGridMore = $(previousGrid).find(".gridMore").eq(0).html()
+            if (previousGridMore === undefined && lastIndex < length) {
+                let watchMore = $("<div></div>").text("+")
+                $("<div class='gridMore' onclick='moreItem(this)'></div>").append(watchMore).insertAfter(gridContent)
+            }
+            else if (lastIndex == length - 1 && previousGridMore !== undefined) {
+                $(previousGrid).find(".gridMore").remove();
+                var num = itemOnRow - ($(gridContent).find('.item').length % itemOnRow);
+                console.log("num: " + num)
+                if (num !== 0 && num != itemOnRow) {
+                    addNullItem(num, gridContent);
+                }
+            }
+        }
+
+
+        function removeItemBackGroundColor(item) {
+            let name = $(item).find(".itemName").eq(0);
+            let price = $(item).find(".itemPrice").eq(0);
+            let cart = $(item).find(".addToCart").eq(0);
+            let cartMb = $(item).find(".addToCart-mb").eq(0);
+
+            name.css("background-color", "transparent");
+            price.css("background-color", "transparent");
+        }
+
+        function addToCart(x) {
+
+            let id = $(x).parent().find(".itemId").eq(0);
+            let img = $(x).parent().find(".itemImg").eq(0).find("img").attr("src");
+            let name = $(x).parent().find(".itemName").eq(0);
+            let price = $(x).parent().find(".itemPrice").eq(0);
+
+            subCart = [];
+            subCart.push(id.text(), img, name.text(), price.text());
+
+            if (!isChosen(cart, id.text())) {
+                var item = { "time": (new Date()), "quantity": 1, "info": JSON.stringify(subCart) }
+                cart.push(item)
+            }
+
+            setNotification(cart);
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            $(x).parent().addClass("wow fadeOutUp animated");
+            $(x).parent().attr("style", "animation-name: fadeInUp;");
+
+            setInterval(function () { removeAnimationAddToCart(x) }, 1500);
+        }
+
+        function removeAnimationAddToCart(x) {
+            $(x).parent().removeClass("wow fadeOutUp animated");
+            $(x).parent().removeAttr("style");
+            //$(x).parent().attr("style", "z-index:0")
+        }
+
+        function isChosen(cart, id) {
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].info.includes(id)) {
+                    cart[i].quantity = parseInt(cart[i].quantity) + 1;
+                    return true;
+                }
+            }
+        }
+
+
+        function addEvent() {
+            var items = document.getElementsByClassName('item');
+            var itemsLength = items.length;
+            for (var i = 0; i < itemsLength; i++) {
+                var itemName = items[i].getElementsByClassName('itemName')[0];
+                itemName.onclick = 'openDetailLink(this);';
+            }
+
+
+        }
+
+        function openDetailLink(itemName) {
+            var itemId = itemName.parentNode.children[0].innerHTML;
+            //
+            frmChiTiet.idSanPham.value = itemId;
+            frmChiTiet.subChiTiet.click();
+        }
+
+        function setNotification(cart) {
+            let notification = $('.shopping-cart>.notify-container>.notify-bubble').eq(0);
+            $(notification).empty();
+            $(notification).eq(0).text(cart.length)
+            $(notification).show(400);
+        }
+        var cart = JSON.parse(window.localStorage.cart)
+        setNotification(cart)
+    </script>
+</body>
+</html>

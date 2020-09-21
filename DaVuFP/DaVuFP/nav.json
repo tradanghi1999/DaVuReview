@@ -1,0 +1,70 @@
+﻿{
+  "link": "https://davuflower.github.io/index.html",
+  "name": "home",
+  "items": [
+    {
+      "link": "",
+      "name": "Chủ đề",
+      "items": [
+        {
+          "link": "https://davuflower.github.io/danhmucsanpham.html?idDanhMuc=S%E1%BA%A3n+ph%E1%BA%A9m+n%E1%BB%95i+b%E1%BA%ADt&subDanhMuc=Submit",
+          "name": "Sản phẩm nổi bật",
+          "items": []
+        },
+        {
+
+          "link": "https://davuflower.github.io/danhmucsanpham.html?idDanhMuc=Sinh+nh%E1%BA%ADt&subDanhMuc=Submit",
+          "name": "Sinh nhật",
+          "items": []
+        }
+      ]
+    },
+    {
+      "link": "",
+      "name": "Loại hoa",
+      "items": [
+        {
+          "link": "https://davuflower.github.io/danhmucsanpham.html?idDanhMuc=Hoa+h%C6%B0%E1%BB%9Bng+d%C6%B0%C6%A1ng&subDanhMuc=Submit",
+          "name": "Hoa hồng",
+          "items": []
+        },
+        {
+          "link": "https://davuflower.github.io/danhmucsanpham.html?idDanhMuc=Hoa+h%C6%B0%E1%BB%9Bng+d%C6%B0%C6%A1ng&subDanhMuc=Submit",
+          "name": "Hoa hướng dương",
+          "items": []
+        }
+      ]
+    },
+    {
+      "link": "",
+      "name": "Quà tặng",
+      "ítems": [
+        {
+          "link": "https://davuflower.github.io/danhmucsanpham.html?idDanhMuc=G%E1%BA%A5u+b%C3%B4ng&subDanhMuc=Submit",
+          "name": "Gấu bông",
+          "items": []
+        },
+        {
+          "link": "https://davuflower.github.io/danhmucsanpham.html?idDanhMuc=K%E1%BA%B9o&subDanhMuc=Submit",
+          "name": "Kẹo",
+          "items": []
+        }
+      ]
+    },
+    {
+      "link": "",
+      "name": "Hướng dẫn",
+      "items": []
+    },
+    {
+      "link": "https://davuflower.github.io/LienHe.html",
+      "name": "Liên hệ",
+      "items": []
+    },
+    {
+      "link": "https://davuflower.github.io/About_us.html",
+      "name": "Giới thiệu",
+      "items": []
+    }
+  ]
+}
