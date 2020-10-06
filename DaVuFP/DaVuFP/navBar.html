@@ -96,50 +96,100 @@
         var getCategoryAjax = ajaxCall(rootPage + 'data/data_homepage.json');
         var getBannerAjax = ajaxCall("banner.json");
 
-        $.when(getBannerAjax)
-            .done(function (r) {
-                var banners = r;
-                let bannerMemoize = memoize(loadBannersToRamAsync);
-                $.when(bannerMemoize(banners))
-                    .done(function (bannerImgs) {
-                        console.log(bannerImgs);
-                    })
-            });
 
-        $.when(getProductAjax, getGiftCategoryAjax)
-            .done(async function (r1, r2) {
+        getBannerAjax
+            .then(memoizeLoadBannerToRamAsync)
+            
+        loadPage();
+        async function loadPage() {
+
+            //let catPipe = getCategoryAjax;
+            //let productPipe = getProductAjax
+            //    .then(loadProductToRamAsync)
+            //let giftPipe = getGiftCategoryAjax
+            //    .then(loadGiftToRamAsync)
+
+            //let imagePipe = combineAsync(productPipe, giftPipe)
+
+            //let [imgs, products, gifts] = await Promise.all([imagePipe, productPipe, giftPipe]);
+
+            //let itemPipe = renderAllItemAsync(products, gifts, imgs);
+            //console.log(itemPipe);
 
 
-                var products = r1[0];
-                //var category = r2[0];
-                var gifts = r2[0];
-                $.when(loadImageToRamAsync(products, gifts), getCategoryAjax)
-                    .done(function (imgs, cateData) {
-                        let categories = cateData[0];
-                        //renderAsync(products, gifts, imgs, categories);
-                       renderAllItemAsync(products, gifts, imgs)
-                           .then(function (items) {
 
-                               renderDataAsync(items, categories).then(function (rn) {
-                                   let beautifyPromises = [];
-                                   $(".preload").removeClass("preload");
-                                   rn.forEach(x => {
-                                       $('.body').append(x)
-                                       beautifyPromises.push(beautifyAsync(x));
-                                   })
 
-                                   $.when(...beautifyPromises)
-                                       .done(function (...grids) {
-                                           $("#cateProto").hide();
-                                       })
-                               });
-                            });
-                    });
-            });
+          //  let categories = await getCategoryAjax;
+          //  let grids = await renderDataAsync(items, categories);
+          //  await beautifyPipeCmd(grids);
+
+
+            let [products, gifts] = await Promise.all([getProductAjax, getGiftCategoryAjax]);
+            let [imgs, categories] = await Promise.all([loadImageToRamAsync(products, gifts), getCategoryAjax]);
+            let items = await renderAllItemAsync(products, gifts, imgs);
+            let grids = await renderDataAsync(items, categories);
+            let beautifyPromises = [];
+            $(".preload").removeClass("preload");
+            grids.forEach(x => {
+                $('.body').append(x)
+                beautifyPromises.push(beautifyAsync(x));
+            })
+            let tGrids = await Promise.all(beautifyPromises);
+            
+            $("#cateProto").hide();
+        }
+
+
 
         window.onresize = function (event) {
             beautifyRender();
         };
+
+        //pipe function
+
+        async function combineAsync(...asFns) {
+
+            let rs = await Promise.all(asFns);
+            let comBn = [];
+            rs.forEach(r => {
+                r.forEach(tItem => comBn.push(tItem));
+            })
+            return comBn;
+            
+        }
+        async function combineAsyncSec(...asFns) {
+
+            let rs = await Promise.all(asFns);
+            let comBn = [];
+            rs.forEach(r => {
+                r.forEach(tItem => comBn.push(tItem));
+            })
+            return comBn;
+
+        }
+
+        async function memoizeLoadBannerToRamAsync(banners) {
+            let bannerMemoize = memoize(loadBannersToRamAsync);
+            let bannerImgs = await bannerMemoize(banners);
+            return bannerImgs;
+        }
+
+        async function beautifyPipeCmd(renderedGrids) {
+            let beautifyPromises = [];
+            $(".preload").removeClass("preload");
+            rn.forEach(x => {
+                $('.body').append(x)
+                beautifyPromises.push(beautifyAsync(x));
+            })
+            await Promise.all(beautifyPromises);
+            $("#cateProto").hide();
+        }
+
+
+
+
+
+         
 
 
         //cache
@@ -260,216 +310,153 @@
             
         }
 
-        function renderCategoryWithRenderDataAsync(items, category) {
-            return new Promise(
-                resolve => {
-                    $.when(getCategoryProto())
-                        .done(function (catProto) {
+        async function renderCategoryWithRenderDataAsync(items, category) {
+            let catProto = await getCategoryProto()
+            catProto.find(".gridTitle").text(category.title);
+            catProto.find('.gridContent').text(null);
 
+            let itemPromises = [];
+            category.items.forEach(x => {
+                itemPromises.push(getItemOnId(x, items));
+            })
 
-                            catProto.find(".gridTitle").text(category.title);
-                            catProto.find('.gridContent').text(null);
-
-                            let itemPromises = [];
-                            category.items.forEach(x => {
-                                itemPromises.push(getItemOnId(x, items));
-                            })
-
-                            $.when(...itemPromises)
-                                .done(function (...itemRenderN) {
-                                    itemRenderN.forEach(x => {
-                                        let gridContent = catProto.find('.gridContent');
-                                        gridContent.append(x);
-                                    })
-
-                                    resolve(catProto);
-                                })
-
-                            
-                        })
-                })
+            let itemRenderN = await Promise.all(itemPromises);
+            itemRenderN.forEach(x => {
+                let gridContent = catProto.find('.gridContent');
+                gridContent.append(x);
+            })
+            return catProto;
         }
 
-        function renderCategoryAsync(products, gifts, imgs, category) {
-            return new Promise(
-                resolve => {
-                    $.when(getCategoryProto())
-                        .done(function (catProto) {
-                            let itemPromises = [];
-                            category.items.forEach(x => {
-                                itemPromises.push(renderItemAsync(products, gifts, imgs, x));
-                            });
-                            $.when(...itemPromises).done(function (...itmRn) {
-                                catProto.find(".gridTitle").text(category.title);
-                                catProto.find('.gridContent').text(null);
-                                itmRn.forEach(x => {
-                                    catProto.find('.gridContent').append(x);
-                                });
-                                resolve(catProto);
-                            })
-                        });
-                });
+        async function renderCategoryAsync(products, gifts, imgs, category) {
+            let catProto = await getCategoryProto();
+            let itemPromises = [];
+            category.items.forEach(x => {
+                itemPromises.push(renderItemAsync(products, gifts, imgs, x));
+            });
 
-            //return new Promise(
-            //    resolve => {
+            let itmRn = await Promise.all(itemPromises);
 
-            //    });
+            catProto.find(".gridTitle").text(category.title);
+            catProto.find('.gridContent').text(null);
+            itmRn.forEach(x => {
+                catProto.find('.gridContent').append(x);
+            });
+            return (catProto);
         }
 
-        function renderItemAsync(products, gifts, imgs, itemId) {
-            return new Promise(
-                resolve => {
-                    $.when(getItemDataAsync(itemId, products, gifts))
-                        .done(function (item) {
-                            $.when(getImgAsync(item.imgLink, imgs),getItemProtoAsync())
-                                .done(function (img, itemProto) {
-                                    itemProto.find(".itemId").text(item.id);
-                                    itemProto.find(".itemName").text(item.title);
-                                    itemProto.find(".itemPrice").text(item.price);
-                                    itemProto.find(".itemImg").text(null);
-                                    let imgDiv = itemProto.find(".itemImg");
-                                    imgDiv.append(img);                   
-                                    resolve(itemProto);
-                                });
-                        });
-                });
+        async function renderItemAsync(products, gifts, imgs, itemId) {
+            let item = await getItemDataAsync(itemId, products, gifts);
+            let [img, itemProto] = await Promise.all([getImgAsync(item.imgLink, imgs), getItemProtoAsync()]);
+            itemProto.find(".itemId").text(item.id);
+            itemProto.find(".itemName").text(item.title);
+            itemProto.find(".itemPrice").text(item.price);
+            itemProto.find(".itemImg").text(null);
+            let imgDiv = itemProto.find(".itemImg");
+            imgDiv.append(img);
+            return (itemProto);
+
         }
 
-        function renderAllItemAsync(products, gifts, imgs) {
-            return new Promise(
-                resolve => {
-                    let itemsRendereds = [];
-                    $.when(renderAllItemInProduct(products, imgs), renderAllItemInGift(gifts, imgs))
-                        .done(function (productRendereds, giftRendereds) {
-                            productRendereds.forEach(x => itemsRendereds.push(x));
-                            giftRendereds.forEach(x => itemsRendereds.push(x));
-                            resolve(itemsRendereds);
-                        })
-                })
+        async function renderAllItemAsync(products, gifts, imgs) {
+            let itemsRendereds = [];
+            let [productRendereds, giftRendereds] =
+                await Promise.all([renderAllItemInProductAsync(products, imgs),
+                                            renderAllItemInGiftAsync(gifts, imgs)]);
+
+            productRendereds.forEach(x => itemsRendereds.push(x));
+            giftRendereds.forEach(x => itemsRendereds.push(x));
+            return (itemsRendereds);
+            
         }
 
 
-        function renderAllItemInProduct(products, imgs) {
-            return new Promise(
-                resolve => {
-                    let productPromises = [];
-                    products.forEach(
-                        x => productPromises.push(renderProductAsync(x, imgs)))
-
-                    $.when(...productPromises)
-                        .done(function (...productRenderedN) {
-                            resolve(productRenderedN);
-                        })
-                    
-                })
+        async function renderAllItemInProductAsync(products, imgs) {
+            let productPromises = [];
+            products.forEach(
+                x => productPromises.push(renderProductAsync(x, imgs)))
+            let productRenderedN = await Promise.all(productPromises);
+            return productRenderedN;
         }
 
 
 
-        function renderProductAsync(product, imgs) {
-            return new Promise(
-                resolve => {
-                    $.when(getImgAsync(product.imgLink, imgs), getItemProtoAsync())
-                        .done(function (img, itemProto) {
-                            itemProto.find(".itemId").text(product.id);
-                            itemProto.find(".itemName").text(product.title);
-                            itemProto.find(".itemPrice").text(product.price);
-                            itemProto.find(".itemImg").text(null);
-                            let imgDiv = itemProto.find(".itemImg");
-                            imgDiv.append(img);
-                            resolve(itemProto);
-                        })
-
-                })
+        /// sửa nguy hiểm
+        async function renderProductAsync(product, imgs) {
+            let [img, itemProto] = await Promise.all([getImgAsync(product.imgLink, imgs), getItemProtoAsync()]);
+            itemProto.find(".itemId").text(product.id);
+            itemProto.find(".itemName").text(product.title);
+            itemProto.find(".itemPrice").text(product.price);
+            itemProto.find(".itemImg").text(null);
+            let imgDiv = itemProto.find(".itemImg");
+            imgDiv.append(img);
+            return  (itemProto);
         }
 
-        function renderAllItemInGift(gifts, imgs) {
-            return new Promise(
-                resolve => {
-                    let giftPromises = [];
-                    gifts.forEach(
-                        x => giftPromises.push(renderGiftAsync(x, imgs)))
 
-                    $.when(...giftPromises)
-                        .done(function (...giftRenderedN) {
-                            resolve(giftRenderedN);
-                        })
+        async function renderAllItemInGiftAsync(gifts, imgs) {
+            let giftPromises = [];
+            gifts.forEach(
+                x => giftPromises.push(renderGiftAsync(x, imgs)))
+            let giftRenderedN = await Promise.all(giftPromises);
+            return giftRenderedN;
 
-                })
         }
+        async function renderGiftAsync(gift, imgs) {
 
-        function renderGiftAsync(gift, imgs) {
-            return new Promise(
-                resolve => {
-                    $.when(getImgAsync(gift.imgLink, imgs), getItemProtoAsync())
-                        .done(function (img, itemProto) {
-                            itemProto.find(".itemId").text(gift.id);
-                            itemProto.find(".itemName").text(gift.title);
-                            itemProto.find(".itemPrice").text(gift.price);
-                            itemProto.find(".itemImg").text(null);
-                            let imgDiv = itemProto.find(".itemImg");
-                            imgDiv.append(img);
-                            resolve(itemProto);
-                        })
-                })
+            let [img, itemProto] =
+                await Promise.all([getImgAsync(gift.imgLink, imgs), getItemProtoAsync()]); 
+
+            itemProto.find(".itemId").text(gift.id);
+            itemProto.find(".itemName").text(gift.title);
+            itemProto.find(".itemPrice").text(gift.price);
+            itemProto.find(".itemImg").text(null);
+            let imgDiv = itemProto.find(".itemImg");
+            imgDiv.append(img);
+            return (itemProto);
+            
         }
 
 
         //load data
 
-        function loadBannersToRamAsync(banners) {
-            return new Promise(resolve => {
-                var bannerLength = banners.length;
-                var bannerPromises = [];
-                banners.forEach(bn => {
-                    bannerPromises.push(loadImgAsync(rootPage + bn.link));
-                });
-
-                $.when(...bannerPromises)
-                    .done(function (...bannerImgs) {
-                        resolve(bannerImgs);
-                    })
+        async function loadBannersToRamAsync(banners) {
+            var bannerLength = banners.length;
+            var bannerPromises = [];
+            banners.forEach(bn => {
+                bannerPromises.push(loadImgAsync(rootPage + bn.link));
             });
+            let bannerImgs = await Promise.all(bannerPromises);
+            return bannerImgs;
         }
 
 
-        function loadImageToRamAsync(products, gifts) {
-            return new Promise(
-                resolve => {
-                    var loadProductTk = loadProductToRamAsync(products);
-                    var loadGiftTk = loadGiftToRamAsync(gifts);
-                    $.when(loadProductTk, loadGiftTk)
-                        .done(function (r1, r2) {
-                            console.log("load product and gift done");
-                            var allImgs = [];
-                            r1.forEach(it => allImgs.push(it));
-                            r2.forEach(it => allImgs.push(it));
-                            resolve(allImgs);
-                        });
-                });
+        async function loadImageToRamAsync(products, gifts) {
+            let loadProductTk = loadProductToRamAsync(products);
+            let loadGiftTk = loadGiftToRamAsync(gifts);
+            let allImgs = [];
 
+            let [productImgs, giftImgs] = await Promise.all([loadProductTk, loadGiftTk]);
 
+            console.log("load product and gift done");
+            productImgs.forEach(it => allImgs.push(it));
+            giftImgs.forEach(it => allImgs.push(it));
+            return (allImgs);
         }
 
-        function loadProductToRamAsync(products) {
-            return new Promise(
-                resolve => {
-                    var productsLength = products.length;
-                    var imgPromises = [];
-                    for (var i = 0; i < productsLength; i++) {
-                        imgPromises.push(loadImgAsync(rootPage + 'data' + products[i].imgLink));
-                    }
-                    $.when(...imgPromises).then(function (...rn) {
-                        resolve(rn);
-                    })
-                },
-                reject => {
+        async function loadProductToRamAsync(products) {
 
-                }
-            );
+            var productsLength = products.length;
+            var imgPromises = [];
+            for (var i = 0; i < productsLength; i++) {
+                imgPromises.push(loadImgAsync(rootPage + 'data' + products[i].imgLink));
+            }
+            let productImgs = await Promise.all(imgPromises);
+            return productImgs;
         }
 
         function loadImgAsync(murl) {
+            
             return new Promise(resolve => {
                 var img = document.createElement("img");
                 img.onload = function () {
@@ -480,74 +467,68 @@
             });
         }
 
-        function loadGiftToRamAsync(gifts) {
-            return new Promise(
-                resolve => {
-
-                    var giftLength = gifts.length;
-                    var giftPromises = [];
-
-                    for (var i = 0; i < giftLength; i++) {
-                        giftPromises.push(loadImgAsync(rootPage + 'data' + gifts[i].imgLink))
-                    }
-
-                    $.when(...giftPromises).then(function (...rn) {
-                        resolve(rn);
-                    })
-                },
-                reject => {
-                });
+        async function loadGiftToRamAsync(gifts) {
+            var giftLength = gifts.length;
+            var giftPromises = [];
+            for (var i = 0; i < giftLength; i++) {
+                giftPromises.push(loadImgAsync(rootPage + 'data' + gifts[i].imgLink))
+            }
+            let imgs = await Promise.all(giftPromises);
+            return imgs;
         }
 
 
         //find item
-        function getItemDataAsync(id, products, gifts) {
-            return new Promise(
-                resolve => {
-                    products.forEach(x => {
-                        if (x.id == id)
-                            resolve(Object.assign({}, x));
-                    })
+        async function getItemDataAsync(id, products, gifts) {
 
-                    gifts.forEach(x => {
-                        if (x.id == id)
-                            resolve(Object.assign({}, x));
-                    })
-                });
+            await products.forEach(x => {
+                if (x.id == id)
+                    return  (Object.assign({}, x));
+            })
+
+            await gifts.forEach(x => {
+                if (x.id == id)
+                    return (Object.assign({}, x));
+            })
+
+            //return new Promise(
+            //    resolve => {
+            //        products.forEach(x => {
+            //            if (x.id == id)
+            //                resolve(Object.assign({}, x));
+            //        })
+
+            //        gifts.forEach(x => {
+            //            if (x.id == id)
+            //                resolve(Object.assign({}, x));
+            //        })
+            //    });
         }
-        function getImgAsync(link, imgs) {
+        async function getImgAsync(link, imgs) {
             return new Promise(
                 resolve => {
                     imgs.forEach(x => {
                         if (x.currentSrc.includes(getFileNameFrom(link))) {
                             //console.log(x);
-                           
                             resolve(x);
                         }
-                            
-                    });
+                    });        
 
                    
                 });
         }
 
         //state funcction
-        function getCategoryProto() {
-            return new Promise(
-                resolve => {
-                    let catClone = $("#cateProto").clone();
-                    catClone.removeAttr('id');
-                    resolve(catClone);
-                });
+        async function getCategoryProto() {
+            let catClone = $("#cateProto").clone();
+            catClone.removeAttr('id');
+            return (catClone);
         }
 
-        function getItemProtoAsync() {
-            return new Promise(
-                resolve => {
-                    let itemClone = $("#itemProto").clone();
-                    itemClone.removeAttr('id');
-                    resolve(itemClone);
-                });
+        async function getItemProtoAsync() {
+            let itemClone = $("#itemProto").clone();
+            itemClone.removeAttr('id');
+            return (itemClone);
         }
 
         function getFileNameFrom(path) {
@@ -575,6 +556,42 @@
                 let buffer =$("#buffer")
             })
         }
+
+        async function logDebug(itemToLog) {
+            console.log(itemToLog);
+        }
+
+
+        //$.when(getProductAjax, getGiftCategoryAjax)
+        //    .done(async function (r1, r2) {
+
+
+        //        var products = r1[0];
+        //        //var category = r2[0];
+        //        var gifts = r2[0];
+        //        $.when(loadImageToRamAsync(products, gifts), getCategoryAjax)
+        //            .done(function (imgs, cateData) {
+        //                let categories = cateData[0];
+        //                //renderAsync(products, gifts, imgs, categories);
+        //               renderAllItemAsync(products, gifts, imgs)
+        //                   .then(function (items) {
+
+        //                       renderDataAsync(items, categories).then(function (rn) {
+        //                           let beautifyPromises = [];
+        //                           $(".preload").removeClass("preload");
+        //                           rn.forEach(x => {
+        //                               $('.body').append(x)
+        //                               beautifyPromises.push(beautifyAsync(x));
+        //                           })
+
+        //                           $.when(...beautifyPromises)
+        //                               .done(function (...grids) {
+        //                                   $("#cateProto").hide();
+        //                               })
+        //                       });
+        //                    });
+        //            });
+         //   });
     </script>
 
 
