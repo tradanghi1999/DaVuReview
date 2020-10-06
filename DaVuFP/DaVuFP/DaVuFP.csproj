@@ -67,8 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fast-Memoize\index.js" />
     <Content Include="index.html" />
-    <Content Include="navBar - Copy.html" />
     <Content Include="navBar.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -77,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="nav.json" />
+    <Content Include="banner.json" />
+    <Content Include="Fast-Memoize\LICENSE" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
