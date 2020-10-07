@@ -99,23 +99,54 @@
 
         getBannerAjax
             .then(memoizeLoadBannerToRamAsync)
-            
-        loadPage();
+
+        pipeLoadPage();
+        //loadPage();
+
+        async function pipeLoadPage() {
+            let catPipe = getCategoryAjax;
+            //catPipe = catPipe.then(logDebug);
+            let productPipe = getProductAjax
+                
+            let giftPipe = getGiftCategoryAjax
+                
+
+            let imagePipe =
+                combineAsync(
+                    productPipe.then(loadProductToRamAsync),
+                    giftPipe.then(loadGiftToRamAsync)
+                )
+
+            productPipe =
+                combinePipeAsync(
+                    renderAllItemInProductAsync,
+                    productPipe,
+                    imagePipe);
+
+            giftPipe =
+                combinePipeAsync(
+                    renderAllItemInGiftAsync,
+                    giftPipe,
+                    imagePipe);
+
+            let itemPipe = combineAsync(productPipe, giftPipe);
+            let gridPipe = combinePipeAsync(
+                renderDataAsync,
+                itemPipe,
+                catPipe)
+
+            gridPipe.then(beautifyPipeCmd);
+           
+
+        }
+
+
+
+        
+
         async function loadPage() {
 
-            //let catPipe = getCategoryAjax;
-            //let productPipe = getProductAjax
-            //    .then(loadProductToRamAsync)
-            //let giftPipe = getGiftCategoryAjax
-            //    .then(loadGiftToRamAsync)
-
-            //let imagePipe = combineAsync(productPipe, giftPipe)
-
-            //let [imgs, products, gifts] = await Promise.all([imagePipe, productPipe, giftPipe]);
-
-            //let itemPipe = renderAllItemAsync(products, gifts, imgs);
-            //console.log(itemPipe);
-
+            
 
 
 
@@ -124,19 +155,23 @@
           //  await beautifyPipeCmd(grids);
 
 
-            let [products, gifts] = await Promise.all([getProductAjax, getGiftCategoryAjax]);
-            let [imgs, categories] = await Promise.all([loadImageToRamAsync(products, gifts), getCategoryAjax]);
+            let     [products,
+                    gifts] = await
+                Promise.all([
+                    getProductAjax,
+                    getGiftCategoryAjax
+                ]);
+
+            let     [imgs,
+                    categories] = await
+                Promise.all([
+                    loadImageToRamAsync(products, gifts),
+                    getCategoryAjax
+                ]);
+
             let items = await renderAllItemAsync(products, gifts, imgs);
             let grids = await renderDataAsync(items, categories);
-            let beautifyPromises = [];
-            $(".preload").removeClass("preload");
-            grids.forEach(x => {
-                $('.body').append(x)
-                beautifyPromises.push(beautifyAsync(x));
-            })
-            let tGrids = await Promise.all(beautifyPromises);
-            
-            $("#cateProto").hide();
+            beautifyPipeCmd(grids);
         }
 
 
@@ -146,6 +181,13 @@
         };
 
         //pipe function
+
+        async function combinePipeAsync(pipeFn, ...asPipes) {
+
+            let pipeResults = await Promise.all(asPipes);
+            let result = await pipeFn.apply(null, pipeResults);
+            return result;
+        }
 
         async function combineAsync(...asFns) {
 
@@ -177,7 +219,7 @@
         async function beautifyPipeCmd(renderedGrids) {
             let beautifyPromises = [];
             $(".preload").removeClass("preload");
-            rn.forEach(x => {
+            renderedGrids.forEach(x => {
                 $('.body').append(x)
                 beautifyPromises.push(beautifyAsync(x));
             })
@@ -249,8 +291,8 @@
                 //mGrid.find(".gridContent").remove(".bufferItem");
                 var itemsLength = mGrid.find(".gridContent").children().length;
                 var onRow = countItemOnRow();
-                console.log(onRow);
-                console.log(itemsLength);
+                //console.log(onRow);
+                //console.log(itemsLength);
                 var bufferLength = onRow - itemsLength % onRow;
                 if (bufferLength == onRow) bufferLength = 0;
 
@@ -266,7 +308,7 @@
         function beautifySync(mGrid) {
             var itemsLength = $(mGrid).find(".gridContent").children().length;
             var onRow = countItemOnRow();
-            console.log(onRow);
+            //console.log(onRow);
             var bufferLength = onRow - itemsLength % onRow;
             if (bufferLength == onRow) bufferLength = 0;
             for (var i = 0; i < bufferLength; i++) {
@@ -446,9 +488,9 @@
 
         async function loadProductToRamAsync(products) {
 
-            var productsLength = products.length;
-            var imgPromises = [];
-            for (var i = 0; i < productsLength; i++) {
+            let productsLength = products.length;
+            let imgPromises = [];
+            for (let i = 0; i < productsLength; i++) {
                 imgPromises.push(loadImgAsync(rootPage + 'data' + products[i].imgLink));
             }
             let productImgs = await Promise.all(imgPromises);
