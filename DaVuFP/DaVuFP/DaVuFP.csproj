@@ -67,9 +67,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DaVuProject\Controller\indexPage.js" />
+    <Content Include="DaVuProject\DataAPI\ajax.js" />
+    <Content Include="DaVuProject\Framework\Fast-Memoize\index.js" />
+    <Content Include="DaVuProject\Framework\jquery.min.js" />
+    <Content Include="DaVuProject\Implemtation\dataInterface.js" />
+    <Content Include="DaVuProject\index.html" />
+    <Content Include="DaVuProject\Presenter\indexPage.js" />
+    <Content Include="DaVuProject\testPage.html" />
+    <Content Include="DaVuProject\UseCase\Index\surfProduct.js" />
+    <Content Include="DaVuProject\UtilAsFramework\beautify.js" />
+    <Content Include="DaVuProject\UtilAsFramework\cache.js" />
+    <Content Include="DaVuProject\UtilAsFramework\pipeln.js" />
+    <Content Include="DaVuProject\UtilAsFramework\promise.js" />
+    <Content Include="DaVuProject\UtilAsFramework\ram.js" />
+    <Content Include="DaVuProject\UtilAsFramework\utils.js" />
+    <Content Include="ExternalJQLib\index.js" />
+    <Content Include="ExternalJQLib\jquery.min.js" />
+    <Content Include="ExternalJquery.html" />
     <Content Include="Fast-Memoize\index.js" />
     <Content Include="index.html" />
+    <Content Include="navBar - Copy.html" />
+    <Content Include="navBar ExternalJs.html" />
+    <Content Include="navBar NoPipe.html" />
     <Content Include="navBar.html" />
+    <Content Include="NLib\ajax.js" />
+    <Content Include="NLib\beautify.js" />
+    <Content Include="NLib\cache.js" />
+    <Content Include="NLib\jquery.min.js" />
+    <Content Include="NLib\pipln.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +105,7 @@
     <Content Include="nav.json" />
     <Content Include="banner.json" />
     <Content Include="Fast-Memoize\LICENSE" />
+    <Content Include="DaVuProject\Framework\Fast-Memoize\LICENSE" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -87,6 +114,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

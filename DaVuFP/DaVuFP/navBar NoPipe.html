@@ -101,17 +101,19 @@
             .then(memoizeLoadBannerToRamAsync)
 
         pipeLoadPage();
-        
+        //loadPage();
+
         async function pipeLoadPage() {
             let catPipe = getCategoryAjax;
+            //catPipe = catPipe.then(logDebug);
             let productPipe = getProductAjax
+                
             let giftPipe = getGiftCategoryAjax
+                
 
             let imagePipe =
                 combineAsync(
-                    productPipe
-                        .then(memoizeResultAsync(productPipe))
-                        .then(loadProductToRamAsync),
+                    productPipe.then(loadProductToRamAsync),
                     giftPipe.then(loadGiftToRamAsync)
                 )
 
@@ -133,13 +135,46 @@
                 itemPipe,
                 catPipe)
 
-            gridPipe.then(beautifyPipeCmd)
-                .then(() => {
-
-                })
+            gridPipe.then(beautifyPipeCmd);
            
 
         }
+
+
+
+        
+
+        async function loadPage() {
+
+            
+
+
+
+          //  let categories = await getCategoryAjax;
+          //  let grids = await renderDataAsync(items, categories);
+          //  await beautifyPipeCmd(grids);
+
+
+            let     [products,
+                    gifts] = await
+                Promise.all([
+                    getProductAjax,
+                    getGiftCategoryAjax
+                ]);
+
+            let     [imgs,
+                    categories] = await
+                Promise.all([
+                    loadImageToRamAsync(products, gifts),
+                    getCategoryAjax
+                ]);
+
+            let items = await renderAllItemAsync(products, gifts, imgs);
+            let grids = await renderDataAsync(items, categories);
+            beautifyPipeCmd(grids);
+        }
+
+
 
         window.onresize = function (event) {
             beautifyRender();
@@ -164,13 +199,16 @@
             return comBn;
             
         }
+        async function combineAsyncSec(...asFns) {
 
-        async function memoizeResultAsync(asyncFn) {
-            let m = memoize(asyncFn);
-            let result = await m;
-            return result;
+            let rs = await Promise.all(asFns);
+            let comBn = [];
+            rs.forEach(r => {
+                r.forEach(tItem => comBn.push(tItem));
+            })
+            return comBn;
+
         }
-      
 
         async function memoizeLoadBannerToRamAsync(banners) {
             let bannerMemoize = memoize(loadBannersToRamAsync);
@@ -227,10 +265,12 @@
         
 
         function beautifyRender() {
+            //let beautifyPromises = [];
             $(".preload").removeClass("preload");
             $(".bufferItem").remove();
             let rn = $(".grid");
             for (var i = 0; i < rn.length; i++) {
+                //beautifyPromises.push(beautifyAsync(rn[i]));
                 beautifySync(rn[i]);
             }
             
@@ -241,7 +281,8 @@
 
             var itemsLength = mGrid.find(".gridContent").children().length;
             var onRow = countItemOnRow();
-        
+            //console.log(onRow);
+            //console.log(itemsLength);
             var bufferLength = onRow - itemsLength % onRow;
             if (bufferLength == onRow) bufferLength = 0;
 
@@ -257,7 +298,7 @@
         function beautifySync(mGrid) {
             var itemsLength = $(mGrid).find(".gridContent").children().length;
             var onRow = countItemOnRow();
-            
+            //console.log(onRow);
             var bufferLength = onRow - itemsLength % onRow;
             if (bufferLength == onRow) bufferLength = 0;
             for (var i = 0; i < bufferLength; i++) {
@@ -266,7 +307,7 @@
             }
         }
 
-        // render
+
         async function renderDataAsync(items, categories) {
             let categoryPromises = [];
             categories.forEach(
@@ -298,9 +339,27 @@
             return catProto;
         }
 
-        
+        async function renderCategoryAsync(products, gifts, imgs, category) {
+            let catProto = await getCategoryProto();
+            let itemPromises = [];
+            category.items.forEach(x => {
+                itemPromises.push(renderItemAsync(products, gifts, imgs, x));
+            });
+
+            let itmRn = await Promise.all(itemPromises);
+
+            catProto.find(".gridTitle").text(category.title);
+            catProto.find('.gridContent').text(null);
+            itmRn.forEach(x => {
+                catProto.find('.gridContent').append(x);
+            });
+            return (catProto);
+        }
+
         async function renderItemAsync(products, gifts, imgs, itemId) {
-            let item = await getItemDataAsync(itemId, products, gifts);
+            let item = await
+                getItemDataAsync(itemId, products, gifts);
+
             let [img, itemProto] = await
                 Promise.all([
                     getImgAsync(item.imgLink, imgs),
@@ -310,42 +369,46 @@
             itemProto.find(".itemId").text(item.id);
             itemProto.find(".itemName").text(item.title);
             itemProto.find(".itemPrice").text(item.price);
-
             itemProto.find(".itemImg").text(null);
             let imgDiv = itemProto.find(".itemImg");
             imgDiv.append(img);
+
             return (itemProto);
 
         }
 
-       
+        async function renderAllItemAsync(products, gifts, imgs) {
+            let itemsRendereds = [];
+            let [productRendereds, giftRendereds] =
+                await Promise.all([renderAllItemInProductAsync(products, imgs),
+                                            renderAllItemInGiftAsync(gifts, imgs)]);
+
+            productRendereds.forEach(x => itemsRendereds.push(x));
+            giftRendereds.forEach(x => itemsRendereds.push(x));
+            return (itemsRendereds);
+            
+        }
+
 
         async function renderAllItemInProductAsync(products, imgs) {
             let productPromises = [];
-            products.forEach( x =>
-                 productPromises.push(
-                    renderProductAsync(x, imgs)
-                ))
+            products.forEach(
+                x => productPromises.push(renderProductAsync(x, imgs)))
             let productRenderedN = await Promise.all(productPromises);
             return productRenderedN;
         }
 
 
 
+        /// sửa nguy hiểm
         async function renderProductAsync(product, imgs) {
-            let [img, itemProto] = await
-                Promise.all([
-                    getImgAsync(product.imgLink, imgs),
-                    getItemProtoAsync()
-                ]);
-
+            let [img, itemProto] = await Promise.all([getImgAsync(product.imgLink, imgs), getItemProtoAsync()]);
             itemProto.find(".itemId").text(product.id);
             itemProto.find(".itemName").text(product.title);
             itemProto.find(".itemPrice").text(product.price);
-
             itemProto.find(".itemImg").text(null);
-            itemProto.find(".itemImg").append(img);
-            
+            let imgDiv = itemProto.find(".itemImg");
+            imgDiv.append(img);
             return  (itemProto);
         }
 
@@ -354,8 +417,8 @@
             let giftPromises = [];
             gifts.forEach(
                 x => giftPromises.push(renderGiftAsync(x, imgs)))
-
-            return await Promise.all(giftPromises);
+            let giftRenderedN = await Promise.all(giftPromises);
+            return giftRenderedN;
 
         }
         async function renderGiftAsync(gift, imgs) {
@@ -366,10 +429,9 @@
             itemProto.find(".itemId").text(gift.id);
             itemProto.find(".itemName").text(gift.title);
             itemProto.find(".itemPrice").text(gift.price);
-
             itemProto.find(".itemImg").text(null);
-            itemProto.find(".itemImg").append(img);
-           
+            let imgDiv = itemProto.find(".itemImg");
+            imgDiv.append(img);
             return (itemProto);
             
         }
@@ -383,11 +445,24 @@
             banners.forEach(bn => {
                 bannerPromises.push(loadImgAsync(rootPage + bn.link));
             });
-
             let bannerImgs = await Promise.all(bannerPromises);
             return bannerImgs;
         }
-       
+
+
+        async function loadImageToRamAsync(products, gifts) {
+            let loadProductTk = loadProductToRamAsync(products);
+            let loadGiftTk = loadGiftToRamAsync(gifts);
+            let allImgs = [];
+
+            let [productImgs, giftImgs] = await Promise.all([loadProductTk, loadGiftTk]);
+
+            console.log("load product and gift done");
+            productImgs.forEach(it => allImgs.push(it));
+            giftImgs.forEach(it => allImgs.push(it));
+            return (allImgs);
+        }
+
         async function loadProductToRamAsync(products) {
 
             let productsLength = products.length;
@@ -395,7 +470,6 @@
             for (let i = 0; i < productsLength; i++) {
                 imgPromises.push(loadImgAsync(rootPage + 'data' + products[i].imgLink));
             }
-
             let productImgs = await Promise.all(imgPromises);
             return productImgs;
         }
@@ -416,10 +490,8 @@
             var giftLength = gifts.length;
             var giftPromises = [];
             for (var i = 0; i < giftLength; i++) {
-                giftPromises.push(
-                    loadImgAsync(rootPage + 'data' + gifts[i].imgLink)
-                )}
-
+                giftPromises.push(loadImgAsync(rootPage + 'data' + gifts[i].imgLink))
+            }
             let imgs = await Promise.all(giftPromises);
             return imgs;
         }
@@ -437,17 +509,27 @@
                 if (x.id == id)
                     return (Object.assign({}, x));
             })
-        }
 
+            //return new Promise(
+            //    resolve => {
+            //        products.forEach(x => {
+            //            if (x.id == id)
+            //                resolve(Object.assign({}, x));
+            //        })
+
+            //        gifts.forEach(x => {
+            //            if (x.id == id)
+            //                resolve(Object.assign({}, x));
+            //        })
+            //    });
+        }
         async function getImgAsync(link, imgs) {
             return new Promise(
                 resolve => {
                     imgs.forEach(x => {
-                        if (x.currentSrc.includes(
-                            getFileNameFrom(link)
-                        ))
-                        {
-                                resolve(x);
+                        if (x.currentSrc.includes(getFileNameFrom(link))) {
+                            //console.log(x);
+                            resolve(x);
                         }
                     });        
 
@@ -488,12 +570,41 @@
            
         }
 
-
-        // debug
         async function logDebug(itemToLog) {
             console.log(itemToLog);
         }
 
+
+        //$.when(getProductAjax, getGiftCategoryAjax)
+        //    .done(async function (r1, r2) {
+
+
+        //        var products = r1[0];
+        //        //var category = r2[0];
+        //        var gifts = r2[0];
+        //        $.when(loadImageToRamAsync(products, gifts), getCategoryAjax)
+        //            .done(function (imgs, cateData) {
+        //                let categories = cateData[0];
+        //                //renderAsync(products, gifts, imgs, categories);
+        //               renderAllItemAsync(products, gifts, imgs)
+        //                   .then(function (items) {
+
+        //                       renderDataAsync(items, categories).then(function (rn) {
+        //                           let beautifyPromises = [];
+        //                           $(".preload").removeClass("preload");
+        //                           rn.forEach(x => {
+        //                               $('.body').append(x)
+        //                               beautifyPromises.push(beautifyAsync(x));
+        //                           })
+
+        //                           $.when(...beautifyPromises)
+        //                               .done(function (...grids) {
+        //                                   $("#cateProto").hide();
+        //                               })
+        //                       });
+        //                    });
+        //            });
+         //   });
     </script>
 
 

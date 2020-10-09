@@ -22,10 +22,10 @@
                 <i class="fas fa-angle-right"></i>
             </a>
             <!--<div style="display: flex; flex-flow:row; justify-content:center;">
-            <div class="bana" onclick="changeBanner()">&lt;</div>
-            <div>&nbsp;</div>
-            <div class="bana" onclick="changeBanner()">&gt;</div>
-        </div>-->
+                <div class="bana" onclick="changeBanner()">&lt;</div>
+                <div>&nbsp;</div>
+                <div class="bana" onclick="changeBanner()">&gt;</div>
+            </div>-->
         </div>
         <div class="grid" id="cateProto">
             <!--hàng 1-->
@@ -71,8 +71,8 @@
             </div>
             <!--hàng 3-->
             <!--<div class="gridMore" onclick="themItem(this)">
-            <div>+</div>
-        </div>-->
+                <div>+</div>
+            </div>-->
         </div>
 
     </div>
@@ -90,18 +90,14 @@
 
 
 
-        var rootPage = 'https://davuflower.github.io/';
-        var getProductAjax = ajaxCall(rootPage + 'data/data_sanpham.json');
-        var getGiftCategoryAjax = ajaxCall(rootPage + 'data/data_quatangkem.json');
-        var getCategoryAjax = ajaxCall(rootPage + 'data/data_homepage.json');
-        var getBannerAjax = ajaxCall("banner.json");
+        
 
 
-        getBannerAjax
-            .then(memoizeLoadBannerToRamAsync)
+        //getBannerAjax
+            //.then(memoizeLoadBannerToRamAsync)
 
         pipeLoadPage();
-        
+
         async function pipeLoadPage() {
             let catPipe = getCategoryAjax;
             let productPipe = getProductAjax
@@ -137,7 +133,7 @@
                 .then(() => {
 
                 })
-           
+
 
         }
 
@@ -147,30 +143,8 @@
 
         //pipe function
 
-        async function combinePipeAsync(pipeFn, ...asPipes) {
-
-            let pipeResults = await Promise.all(asPipes);
-            let result = await pipeFn.apply(null, pipeResults);
-            return result;
-        }
-
-        async function combineAsync(...asFns) {
-
-            let rs = await Promise.all(asFns);
-            let comBn = [];
-            rs.forEach(r => {
-                r.forEach(tItem => comBn.push(tItem));
-            })
-            return comBn;
-            
-        }
-
-        async function memoizeResultAsync(asyncFn) {
-            let m = memoize(asyncFn);
-            let result = await m;
-            return result;
-        }
-      
+        
+        
 
         async function memoizeLoadBannerToRamAsync(banners) {
             let bannerMemoize = memoize(loadBannersToRamAsync);
@@ -191,21 +165,11 @@
 
 
         //cache
-        var caches = {};
-        function getCache(key) {
-            if (typeof caches == "undefined")
-                caches = {};
-            return caches[key];
-        }
-        function setCache(key, value) {
-            if (typeof caches == "undefined")
-                caches = {};
-            caches[key] = value;
-        }
+        
 
         // beautify
         function countItemOnRow() {
-            
+
             var gridContents = document.getElementsByClassName("gridContent");
             var gridContent;
             if (gridContents.length > 1)
@@ -224,7 +188,7 @@
 
             return numberOfItemOnRow;
         }
-        
+
 
         function beautifyRender() {
             $(".preload").removeClass("preload");
@@ -233,15 +197,15 @@
             for (var i = 0; i < rn.length; i++) {
                 beautifySync(rn[i]);
             }
-            
-            
+
+
         }
 
         async function beautifyAsync(mGrid) {
 
             var itemsLength = mGrid.find(".gridContent").children().length;
             var onRow = countItemOnRow();
-        
+
             var bufferLength = onRow - itemsLength % onRow;
             if (bufferLength == onRow) bufferLength = 0;
 
@@ -250,14 +214,14 @@
                 mGrid.find(".gridContent").append($('<div class="bufferItem"></div>'));
             }
             return (mGrid.find(".gridContent"));
-          
+
         }
 
 
         function beautifySync(mGrid) {
             var itemsLength = $(mGrid).find(".gridContent").children().length;
             var onRow = countItemOnRow();
-            
+
             var bufferLength = onRow - itemsLength % onRow;
             if (bufferLength == onRow) bufferLength = 0;
             for (var i = 0; i < bufferLength; i++) {
@@ -278,7 +242,7 @@
             return categoryRendereds
         }
 
-       
+
 
         async function renderCategoryWithRenderDataAsync(items, category) {
             let catProto = await getCategoryProto()
@@ -298,7 +262,23 @@
             return catProto;
         }
 
-        
+        async function renderCategoryAsync(products, gifts, imgs, category) {
+            let catProto = await getCategoryProto();
+            let itemPromises = [];
+            category.items.forEach(x => {
+                itemPromises.push(renderItemAsync(products, gifts, imgs, x));
+            });
+
+            let itmRn = await Promise.all(itemPromises);
+
+            catProto.find(".gridTitle").text(category.title);
+            catProto.find('.gridContent').text(null);
+            itmRn.forEach(x => {
+                catProto.find('.gridContent').append(x);
+            });
+            return (catProto);
+        }
+
         async function renderItemAsync(products, gifts, imgs, itemId) {
             let item = await getItemDataAsync(itemId, products, gifts);
             let [img, itemProto] = await
@@ -318,12 +298,12 @@
 
         }
 
-       
+
 
         async function renderAllItemInProductAsync(products, imgs) {
             let productPromises = [];
-            products.forEach( x =>
-                 productPromises.push(
+            products.forEach(x =>
+                productPromises.push(
                     renderProductAsync(x, imgs)
                 ))
             let productRenderedN = await Promise.all(productPromises);
@@ -345,8 +325,8 @@
 
             itemProto.find(".itemImg").text(null);
             itemProto.find(".itemImg").append(img);
-            
-            return  (itemProto);
+
+            return (itemProto);
         }
 
 
@@ -361,7 +341,7 @@
         async function renderGiftAsync(gift, imgs) {
 
             let [img, itemProto] =
-                await Promise.all([getImgAsync(gift.imgLink, imgs), getItemProtoAsync()]); 
+                await Promise.all([getImgAsync(gift.imgLink, imgs), getItemProtoAsync()]);
 
             itemProto.find(".itemId").text(gift.id);
             itemProto.find(".itemName").text(gift.title);
@@ -369,9 +349,9 @@
 
             itemProto.find(".itemImg").text(null);
             itemProto.find(".itemImg").append(img);
-           
+
             return (itemProto);
-            
+
         }
 
 
@@ -387,7 +367,7 @@
             let bannerImgs = await Promise.all(bannerPromises);
             return bannerImgs;
         }
-       
+
         async function loadProductToRamAsync(products) {
 
             let productsLength = products.length;
@@ -401,7 +381,7 @@
         }
 
         function loadImgAsync(murl) {
-            
+
             return new Promise(resolve => {
                 var img = document.createElement("img");
                 img.onload = function () {
@@ -418,7 +398,8 @@
             for (var i = 0; i < giftLength; i++) {
                 giftPromises.push(
                     loadImgAsync(rootPage + 'data' + gifts[i].imgLink)
-                )}
+                )
+            }
 
             let imgs = await Promise.all(giftPromises);
             return imgs;
@@ -430,7 +411,7 @@
 
             await products.forEach(x => {
                 if (x.id == id)
-                    return  (Object.assign({}, x));
+                    return (Object.assign({}, x));
             })
 
             await gifts.forEach(x => {
@@ -445,13 +426,12 @@
                     imgs.forEach(x => {
                         if (x.currentSrc.includes(
                             getFileNameFrom(link)
-                        ))
-                        {
-                                resolve(x);
+                        )) {
+                            resolve(x);
                         }
-                    });        
+                    });
 
-                   
+
                 });
         }
 
@@ -485,7 +465,7 @@
 
                     });
                 })
-           
+
         }
 
 
@@ -500,7 +480,7 @@
     <!--body và style của body-->
     <style>
         /**/
-      
+
 
         @media screen and (min-width: 960px) {
             .banner {
@@ -614,20 +594,21 @@
                         .body > .grid > .gridMore :hover {
                             color: #a2a2a2;
                         }
-                    .bufferItem
-                    {
-                        width: 300px;
-                        min-height: 300px;
-                    }
-                    .body > .grid > .gridContent > .item {
-                        width: 300px;
-                        text-align: center;
-                        display: flex;
-                        flex-flow: column wrap;
-                        min-height: 300px;
-                        justify-content: flex-end;
-                        margin: 15px 0;
-                    }
+
+            .bufferItem {
+                width: 300px;
+                min-height: 300px;
+            }
+
+            .body > .grid > .gridContent > .item {
+                width: 300px;
+                text-align: center;
+                display: flex;
+                flex-flow: column wrap;
+                min-height: 300px;
+                justify-content: flex-end;
+                margin: 15px 0;
+            }
 
             .itemId {
                 display: none;
@@ -707,7 +688,7 @@
                     background-color: #ebb9ff;
                 }
 
-         
+
 
             .hidden {
                 display: none;
@@ -778,9 +759,10 @@
                 /*border-radius: 5px;*/
             }
 
-            .preload .bufferItem{
+            .preload .bufferItem {
                 width: 0;
             }
+
             .preload > .body > .grid > .gridContent > .item {
                 background-color: #fff;
                 /*width: 400px;*/
@@ -873,9 +855,9 @@
                     /*border-radius: 5px;*/
                 }
 
-                .body > .grid > .gridTitle:hover {
-                    color: #8185b8;
-                }
+                    .body > .grid > .gridTitle:hover {
+                        color: #8185b8;
+                    }
 
                 .body > .grid > .gridContent {
                     background-color: #ffffff;
@@ -885,6 +867,7 @@
                     justify-content: space-evenly;
                     margin-bottom: 0;
                 }
+
                 .body > .grid > .gridMore {
                     text-align: center;
                     cursor: pointer;
@@ -922,6 +905,7 @@
         .itemId {
             display: none;
         }
+
         .body > .grid > .gridContent > .item > .itemImg {
             height: 250px;
             width: 250px;
@@ -946,7 +930,6 @@
         .body > .grid > .gridContent > .item > .itemName {
             font-size: 18px;
             color: #444444;
-           
             font-family: 'Quicksand';
             font-weight: 800;
             padding: 5px 0;
@@ -970,7 +953,7 @@
             font-weight: lighter;
             font-family: 'Roboto';
             color: #606060;
-            padding:  0;
+            padding: 0;
         }
 
             .body > .grid > .gridContent > .item > .itemPrice:hover {
@@ -1008,7 +991,6 @@
 
             .preload > .body > .grid > .gridTitle {
                 background-color: #E3E3E3;
-               
                 min-height: 25px;
                 /*border-radius: 5px;*/
                 margin-bottom: 5px;
@@ -1098,8 +1080,6 @@
             font-weight: 700;
             font-size: 20px;
         }
-
-
     </style>
 
 </body>

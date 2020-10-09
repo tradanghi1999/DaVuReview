@@ -5,6 +5,8 @@
     <title></title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="Fast-Memoize/index.js"></script>
+    <script src="NLib/pipln.js"></script>
+    <script src="NLib/beautify.js"></script>
 </head>
 <body class="preload">
     <div>
@@ -103,15 +105,13 @@
         pipeLoadPage();
         
         async function pipeLoadPage() {
-            let catPipe = getCategoryAjax;
-            let productPipe = getProductAjax
+            let catPipe = getCategoryAjax;           
+            let productPipe = getProductAjax     
             let giftPipe = getGiftCategoryAjax
 
             let imagePipe =
                 combineAsync(
-                    productPipe
-                        .then(memoizeResultAsync(productPipe))
-                        .then(loadProductToRamAsync),
+                    productPipe.then(loadProductToRamAsync),
                     giftPipe.then(loadGiftToRamAsync)
                 )
 
@@ -133,10 +133,7 @@
                 itemPipe,
                 catPipe)
 
-            gridPipe.then(beautifyPipeCmd)
-                .then(() => {
-
-                })
+            gridPipe.then(beautifyPipeCmd);
            
 
         }
@@ -147,29 +144,7 @@
 
         //pipe function
 
-        async function combinePipeAsync(pipeFn, ...asPipes) {
-
-            let pipeResults = await Promise.all(asPipes);
-            let result = await pipeFn.apply(null, pipeResults);
-            return result;
-        }
-
-        async function combineAsync(...asFns) {
-
-            let rs = await Promise.all(asFns);
-            let comBn = [];
-            rs.forEach(r => {
-                r.forEach(tItem => comBn.push(tItem));
-            })
-            return comBn;
-            
-        }
-
-        async function memoizeResultAsync(asyncFn) {
-            let m = memoize(asyncFn);
-            let result = await m;
-            return result;
-        }
+       
       
 
         async function memoizeLoadBannerToRamAsync(banners) {
@@ -190,39 +165,11 @@
         }
 
 
-        //cache
-        var caches = {};
-        function getCache(key) {
-            if (typeof caches == "undefined")
-                caches = {};
-            return caches[key];
-        }
-        function setCache(key, value) {
-            if (typeof caches == "undefined")
-                caches = {};
-            caches[key] = value;
-        }
+      
 
         // beautify
         function countItemOnRow() {
-            
-            var gridContents = document.getElementsByClassName("gridContent");
-            var gridContent;
-            if (gridContents.length > 1)
-                gridContent = gridContents[1];
-            else
-                gridContent = gridContent[0];
-            var item = gridContent.getElementsByClassName("item")[0];
-            var itemRect = item.getBoundingClientRect();
-            var gridContentRect = gridContent.getBoundingClientRect();
-
-            var numberOfItemOnRow = (Math.floor(gridContentRect.width / itemRect.width));
-
-
-            var spaceBetweenItems = (gridContentRect.width - numberOfItemOnRow * itemRect.width) / (numberOfItemOnRow - 1);
-            var spaceRate = spaceBetweenItems / gridContentRect.width;
-
-            return numberOfItemOnRow;
+            return countItemOnRowAbstract("gridContent", "item");
         }
         
 
@@ -298,7 +245,23 @@
             return catProto;
         }
 
-        
+        async function renderCategoryAsync(products, gifts, imgs, category) {
+            let catProto = await getCategoryProto();
+            let itemPromises = [];
+            category.items.forEach(x => {
+                itemPromises.push(renderItemAsync(products, gifts, imgs, x));
+            });
+
+            let itmRn = await Promise.all(itemPromises);
+
+            catProto.find(".gridTitle").text(category.title);
+            catProto.find('.gridContent').text(null);
+            itmRn.forEach(x => {
+                catProto.find('.gridContent').append(x);
+            });
+            return (catProto);
+        }
+
         async function renderItemAsync(products, gifts, imgs, itemId) {
             let item = await getItemDataAsync(itemId, products, gifts);
             let [img, itemProto] = await
