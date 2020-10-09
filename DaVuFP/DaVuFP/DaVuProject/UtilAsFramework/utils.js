@@ -1,11 +1,11 @@
 ﻿import * as jQuery from '../Framework/jquery.min.js'
 
-export function getFileNameFrom(path) {
+function getFileNameFrom(path) {
     path = path.substring(path.lastIndexOf("/") + 1);
     return (path.match(/[^.]+(\.[^?#]+)?/) || [])[0];
 }
 
-export function getWithSpecify(mId, items, classNameWithDot) {
+function getWithSpecify(mId, items, classNameWithDot) {
     return new Promise(
         resolve => {
             items.forEach(x => {
@@ -17,5 +17,23 @@ export function getWithSpecify(mId, items, classNameWithDot) {
 
             });
         })
+}
 
+export function findInArrs(prediciate, ...arrs) {
+
+}
+
+export async function getImgAsync(link, imgs) {
+    return new Promise(
+        resolve => {
+            imgs.forEach(x => {
+                if (x.currentSrc.includes(
+                    getFileNameFrom(link)
+                )) {
+                    resolve(x);
+                }
+            });
+
+
+        });
 }

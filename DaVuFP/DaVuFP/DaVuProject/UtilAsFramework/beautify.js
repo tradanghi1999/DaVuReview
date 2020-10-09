@@ -23,7 +23,7 @@ export function countItemOnRow(parentTag, childTag) {
 export async function beautifyAsync(mGrid, parentTag, childTag, htmlString) {
 
     let itemsLength = mGrid.find(parentTag).children().length;
-    let onRow = countItemOnRowAbstract(parentTag, childTag);
+    let onRow = countItemOnRow(parentTag, childTag);
 
     let bufferLength = onRow - itemsLength % onRow;
     if (bufferLength == onRow) bufferLength = 0;

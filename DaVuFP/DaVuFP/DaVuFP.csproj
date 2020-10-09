@@ -106,6 +106,7 @@
     <Content Include="banner.json" />
     <Content Include="Fast-Memoize\LICENSE" />
     <Content Include="DaVuProject\Framework\Fast-Memoize\LICENSE" />
+    <Content Include="DaVuProject\Data\banner.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

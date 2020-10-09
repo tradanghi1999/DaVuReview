@@ -24,3 +24,7 @@ export async function memoizeResultAsync(asyncFn) {
     let result = await m;
     return result;
 }
+
+export async function endPipe(asyncRes, ...actions) {
+    actions.forEach(act => act(asyncRes));
+}
