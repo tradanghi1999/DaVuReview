@@ -1,6 +1,7 @@
 ﻿
 import * as jQuery from '../Framework/jquery.min.js'
-export function countItemOnRow(parentTag, childTag) {
+import * as fp from './fp.js'
+export async function countItemOnRow(parentTag, childTag) {
 
     let gridContents = document.getElementsByClassName(parentTag);
     let gridContent;
@@ -22,23 +23,37 @@ export function countItemOnRow(parentTag, childTag) {
 
 export async function beautifyAsync(mGrid, parentTag, childTag, htmlString) {
 
-    let itemsLength = mGrid.find(parentTag).children().length;
-    let onRow = countItemOnRow(parentTag, childTag);
+    let parentTagInJquery = "." + parentTag;
+    let mGridContent = mGrid
+        .find(parentTagInJquery); 
 
+    
+
+    let itemsLength = mGridContent
+        .children().length;
+
+    
+    let bufferLength = await getBufferLength(
+        await countItemOnRow(
+            parentTag, childTag),
+        itemsLength);
+
+    fp.loopWithTimes(
+        () => mGridContent.append($(htmlString)),
+        bufferLength
+    )
+}
+
+async function getBufferLength(onRow, itemsLength) {
     let bufferLength = onRow - itemsLength % onRow;
     if (bufferLength == onRow) bufferLength = 0;
-
-    for (var i = 0; i < bufferLength; i++) {
-
-        mGrid.find(parentTag).append($(htmlString));
-    }
-    return (mGrid.find(parentTag));
-
+    return bufferLength;
 }
 
 export function beautifySync(mGrid, parentTag, childTag, htmlString) {
-    var itemsLength = $(mGrid).find(parentTag).children().length;
-    var onRow = countItemOnRowAbstract(parentTag, childTag);
+
+    var itemsLength = mGrid.children(parentTag).children().length;
+    var onRow = countItemOnRow(parentTag, childTag);
 
     var bufferLength = onRow - itemsLength % onRow;
     if (bufferLength == onRow) bufferLength = 0;

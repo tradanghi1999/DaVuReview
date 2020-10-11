@@ -37,3 +37,7 @@ export async function getImgAsync(link, imgs) {
 
         });
 }
+
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

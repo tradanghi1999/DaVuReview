@@ -3,7 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script type="module" src="UseCase/Index/surfProduct.js"></script>
+    <script type="module">
+        import * as cache from './UtilAsFramework/cache.js'
+
+        for (var i = 0; i < 20; i++) {
+            cache.setCache("key", i);
+            console.log(cache.getCache("key"))
+        }
+    </script>
 </head>
 <body>
 

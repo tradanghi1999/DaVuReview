@@ -6,6 +6,7 @@ import * as aJax from '../../DataAPI/ajax.js'
 import * as utils from '../../UtilAsFramework/utils.js'
 import * as pipeln from '../../UtilAsFramework/pipeln.js'
 import * as beautify from '../../UtilAsFramework/beautify.js'
+import * as cache from '../../UtilAsFramework/cache.js'
 
 let rootPage = 'https://davuflower.github.io/';
 let imageRoot = rootPage + 'data';
@@ -16,9 +17,9 @@ let imageRoot = rootPage + 'data';
 let getProductAjax = aJax.ajaxCall(rootPage + 'data/data_sanpham.json');
 let getGiftCategoryAjax = aJax.ajaxCall(rootPage + 'data/data_quatangkem.json');
 let getCategoryAjax = aJax.ajaxCall(rootPage + 'data/data_homepage.json');
-let getBannerAjax = aJax.ajaxCall("Data/banner.json");
 
-attachSurfProduct();
+
+//attachSurfProduct();
 
 //
 export function attachSurfProduct() {
@@ -51,32 +52,104 @@ export function attachSurfProduct() {
         itemPipe,
         catPipe)
 
+
+
+    let confirmLoaded = () => {
+        $(".preload").removeClass("preload");
+    }
+    let appendGridToHTML = (grids) => {
+        grids.forEach(
+            grd => $('.body').append(grd))
+    }
+
+    let beautifyRender = async (grids) => {
+        return await prom.arrayDoingAsync(
+            grids,
+            (grd) => beautify.beautifyAsync(
+                grd,
+                'gridContent',
+                'item',
+                '<div class="bufferItem"></div>'
+            ),
+            null
+        )
+    }
+
+    let cacheMemory = (grids) => {
+        cache.setCache("grids", grids);
+    }
+
+    let removeProto = () => $("#cateProto").hide();
+    
+
     gridPipe.then(
         (grids) => {
             pipeln.endPipe(grids,
-                () => {
-                    $(".preload").removeClass("preload");
-                },
-                (grids) => {
-                    grids.forEach(
-                        grd => $('.body').append(grd))
-                    prom.arrayDoingAsync(
-                        grids,
-                        async (grd) =>
-                            beautify.beautifyAsync(
-                                grd,
-                                'gridContent',
-                                'item',
-                                '<div class="bufferItem"></div>'
-                            )
-
-                    )
-                }
-                    
+                confirmLoaded,
+                appendGridToHTML,
+                beautifyRender,
+                cacheMemory,
+                removeProto
             )
         })
+
+    window.onresize = async function () {
+        $(".preload").removeClass("preload");
+        $(".bufferItem").remove();
+
+        let grids =  cache.getCache("grids")
+        await prom.arrayDoingAsync(
+            grids,
+            (grd) => beautify.beautifyAsync(
+                grd,
+                'gridContent',
+                'item',
+                '<div class="bufferItem"></div>'
+            ),
+            null
+        )
+
+    }
 }
 
+//
+export function attachSurfCategory() {
+    addClickToCategories();
+}
+
+async function addClickToCategories() {
+    let grids;
+    while ((grids = cache.getCache("grids")) == null) {
+        await utils.sleep(200);
+    }
+
+    prom.arrayDoingAsync(
+        grids,
+        async (grid) =>
+        {
+            let title = grid.find(".gridTitle").text()
+            let gridTitle = grid.find(".gridTitle");
+            return await addClickToCategory(gridTitle, title)
+        },
+        null
+    )
+
+}
+
+let categoryRootLink = "category.html?title=" 
+async function addClickToCategory(gridTitle, title) {
+
+    gridTitle.on("click", function () {
+        let url = categoryRootLink + title;
+        goToUrl(url);
+    })
+
+    return gridTitle;
+}
+
+function goToUrl(hrefL) {
+    location.href = hrefL;
+}
 
 
 //load raw data to ram
@@ -89,12 +162,6 @@ async function loadImgsToRamAsync(imgRaws, imgRaw2ParamConverter) {
     )
 }
 
-async function loadBannersToRamAsync(banners) {
-    return await loadImgsToRamAsync(
-        banners,
-        (bn) => rootPage + bn.link
-    )
-}
 
 async function loadProductToRamAsync(products) {
     return await loadImgsToRamAsync(

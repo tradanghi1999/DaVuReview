@@ -26,5 +26,7 @@ export async function memoizeResultAsync(asyncFn) {
 }
 
 export async function endPipe(asyncRes, ...actions) {
-    actions.forEach(act => act(asyncRes));
+    for (let i = 0; i < actions.length; i++) {
+        await actions[i](asyncRes);
+    }
 }
