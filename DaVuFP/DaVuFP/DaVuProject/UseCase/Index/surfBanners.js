@@ -15,45 +15,46 @@ let getBannerAjax = aJax.ajaxCall("Data/banner.json");
 //attachSurfBanner()
 
 export function attachSurfBanner() {
-    let bannerPipe = getBannerAjax
-        .then(loadBannersToRamAsync)
-        .then((bannerImgs) => {
-            pipeln.endPipe(
-                bannerImgs,
-                cacheBanners,
-                setDefaultBanner,
-                setPreBannerClick,
-                setNextBannerClick
+    
 
-            )
-        })
-
-    let cacheBanners = (bannerImgs) => {
+    let cacheBanners = async (bannerImgs) => {
         cache.setCache("banners", bannerImgs)
+        return bannerImgs;
     }
 
-    let setDefaultBanner = (bannerImgs) => {
+    let setDefaultBanner = async (bannerImgs) => {
         $("#bannerWrapper").append(bannerImgs[0]);
         cache.setCache("curBanner", 0);
+        return bannerImgs;
     }
 
-    let setPreBannerClick = (bannerImgs) => {
+    let setPreBannerClick = async (bannerImgs) => {
         $(".bannerNavigator").first().on("click", async function () {
 
             let curBannerNo = cache.getCache("curBanner");
             curBannerNo = await viewPrevBanner(bannerImgs, curBannerNo)
             cache.setCache("curBanner", curBannerNo);
-            
         })
+        return bannerImgs;
     }
 
-    let setNextBannerClick = (bannerImgs) => {
+    let setNextBannerClick = async (bannerImgs) => {
         $(".bannerNavigator").last().on("click", async function () {
             let curBannerNo = cache.getCache("curBanner");
             curBannerNo = await viewNextBanner(bannerImgs, curBannerNo)
             cache.setCache("curBanner", curBannerNo);
+            
         })
+        return bannerImgs;
     }
+    let bannerPipe = getBannerAjax
+        .then(loadBannersToRamAsync)
+        .then(cacheBanners)
+        .then(setDefaultBanner)
+        .then(setPreBannerClick)
+        .then(setNextBannerClick)
+
+    return bannerPipe;
 }
 
 

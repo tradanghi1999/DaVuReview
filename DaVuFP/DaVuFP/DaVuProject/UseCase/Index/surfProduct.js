@@ -54,12 +54,14 @@ export function attachSurfProduct() {
 
 
 
-    let confirmLoaded = () => {
+    let confirmLoaded = async (grids) => {
         $(".preload").removeClass("preload");
+        return grids;
     }
-    let appendGridToHTML = (grids) => {
+    let appendGridToHTML = async (grids) => {
         grids.forEach(
             grd => $('.body').append(grd))
+        return grids;
     }
 
     let beautifyRender = async (grids) => {
@@ -75,29 +77,41 @@ export function attachSurfProduct() {
         )
     }
 
-    let cacheMemory = (grids) => {
-        cache.setCache("grids", grids);
+    let cacheMemory = async (grids) => {
+        await cache.setCache("grids", grids);
+        return grids;
     }
 
-    let removeProto = () => $("#cateProto").hide();
-    
+    let removeProto = async (grids) => {
+        $("#cateProto").hide();
+        return grids;
+    }
 
-    gridPipe.then(
-        (grids) => {
-            pipeln.endPipe(grids,
-                confirmLoaded,
-                appendGridToHTML,
-                beautifyRender,
-                cacheMemory,
-                removeProto
-            )
-        })
+
+    //gridPipe.then(
+    //    (grids) => {
+    //        pipeln.endPipe(grids,
+    //            confirmLoaded,
+    //            appendGridToHTML,
+    //            beautifyRender,
+    //            cacheMemory,
+    //            removeProto
+    //        )
+    //    })
+
+    let endPipe = gridPipe
+        .then(confirmLoaded)
+        .then(appendGridToHTML)
+        .then(cacheMemory)
+        .then(removeProto)
+        .then(beautifyRender)
+
 
     window.onresize = async function () {
         $(".preload").removeClass("preload");
         $(".bufferItem").remove();
 
-        let grids =  cache.getCache("grids")
+        let grids = cache.getCache("grids")
         await prom.arrayDoingAsync(
             grids,
             (grd) => beautify.beautifyAsync(
@@ -110,11 +124,35 @@ export function attachSurfProduct() {
         )
 
     }
+
+    return endPipe;
 }
 
 //
+
+export async function attachClickProductsName() {
+    let items = $(".item")
+    for (let i = 0; i < items.length; i++) {
+        addClickProductName(items[i])
+    }
+    return items;
+    
+}
+
+
+
+function addClickProductName(item) {
+    let rootUrl = "product.html?id=" + $(item).find(".itemName").text()
+    item.addEventListener("click", function () {
+        goToUrl(rootUrl)
+    })
+    return item;
+}
+
+
 export function attachSurfCategory() {
-    addClickToCategories();
+    let addClick = addClickToCategories();
+    return addClick;
 }
 
 async function addClickToCategories() {
@@ -123,7 +161,7 @@ async function addClickToCategories() {
         await utils.sleep(200);
     }
 
-    prom.arrayDoingAsync(
+    return await prom.arrayDoingAsync(
         grids,
         async (grid) =>
         {
@@ -188,7 +226,10 @@ async function renderItemAsync(item, imgs){
         ]);
 
     itemProto.find(".itemId").text(item.id);
-    itemProto.find(".itemName").text(item.title);
+    let itemName = itemProto.find(".itemName")
+    itemName.text(item.title);
+    
+
     itemProto.find(".itemPrice").text(item.price);
 
     itemProto.find(".itemImg").text(null);

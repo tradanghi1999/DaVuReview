@@ -1,0 +1,106 @@
+﻿@media screen and (min-width: 960px) {
+
+
+    .banner {
+        position: relative;
+        max-width: 90vw;
+        max-height: 51vw;
+        min-width: 80vw;
+        min-height: 45vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .bannerIndicator
+    {
+        display:flex;
+        justify-content:center;
+        align-items:flex-end;
+        height:100%;
+    }
+
+    .bannerIndicatorItem, .bannerIndicatorItemChosen {
+        border-radius: 50%;
+        min-width: 20px;
+        min-height: 20px;
+        background-color: #fff;
+        margin: 10px;
+    }
+    .bannerIndicatorItemChosen {
+        background-color: #000;
+    }
+
+    .bannerOverlay, #bannerWrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .bannerOverlay {
+        z-index: 10;
+        opacity: 0.5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .banner:hover .bannerNavigator {
+        color: black;
+        background-color: white;
+    }
+
+        .banner:hover .bannerNavigator i {
+            color: black;
+        }
+
+    .bannerNavigator {
+        text-decoration: none;
+        font-size: 50px;
+        font-weight: bolder;
+        z-index: 0;
+        cursor: pointer;
+        background-color: rgba(200,200,200,0.7);
+        width: 50px;
+        height: 50px;
+        color: rgba(255,255,255,0.7);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .bannerNavigator:hover {
+            background-color: #d4ade7;
+            color: white;
+        }
+
+    #bannerWrapper {
+        width: 100%;
+        height: 100%;
+    }
+
+        #bannerWrapper > img {
+            width: 100%;
+            height: 100%;
+        }
+    /*Phần preload*/
+
+    .preload > .body > .banner {
+        background-color: #000;
+        opacity: 0.1;
+    }
+
+        .preload > .body > .banner > .bannerOverlay {
+            opacity: 0.3;
+        }
+
+        .preload > .body > .banner > #bannerWrapper {
+        }
+
+        .preload > .body > .banner > .bannerNavigator {
+            background: #000;
+            opacity: 1;
+        }
+
+}
+

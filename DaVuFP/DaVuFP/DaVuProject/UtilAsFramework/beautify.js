@@ -42,6 +42,8 @@ export async function beautifyAsync(mGrid, parentTag, childTag, htmlString) {
         () => mGridContent.append($(htmlString)),
         bufferLength
     )
+
+    return mGrid;
 }
 
 async function getBufferLength(onRow, itemsLength) {

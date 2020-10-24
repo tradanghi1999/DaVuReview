@@ -41,3 +41,22 @@ export async function getImgAsync(link, imgs) {
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export async function getAsync(fn, ...params) {
+    while (fn.apply(params) == null) {
+        await sleep(200);
+    }
+    return fn.apply(params);
+}
+
+export function forEachIn(itms) {
+    if (Array.isArray(itms))
+        return itms;
+    let arr = [];
+    for (let i = 0; i < itms.length; i++) {
+        arr.push(itms[i]);
+    }
+    return arr;
+
+}
+
