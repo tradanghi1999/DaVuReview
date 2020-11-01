@@ -75,6 +75,7 @@
     <Content Include="DaVuRx\CSS\Banner\banner.css" />
     <Content Include="DaVuRx\CSS\Grid\grid.css" />
     <Content Include="DaVuRx\CSS\Loading\loader.css" />
+    <Content Include="DaVuRx\CSS\ProductDetail\detail.css" />
     <Content Include="DaVuRx\DataAPI\ajax.js" />
     <Content Include="DaVuRx\Framework\Fast-Memoize\index.js" />
     <Content Include="DaVuRx\Framework\fontawesome\attribution.js" />
@@ -1739,6 +1740,7 @@
     <Content Include="DaVuRx\UseCase\Index\all.js" />
     <Content Include="DaVuRx\UseCase\Index\surfBanners.js" />
     <Content Include="DaVuRx\UseCase\Index\surfProduct.js" />
+    <Content Include="DaVuRx\UseCase\Product\product.js" />
     <Content Include="DaVuRx\UtilAsFramework\beautify.js" />
     <Content Include="DaVuRx\UtilAsFramework\cache.js" />
     <Content Include="DaVuRx\UtilAsFramework\fp.js" />
@@ -5297,7 +5299,6 @@
   <ItemGroup>
     <Folder Include="DaVuProject\UseCase\Product\" />
     <Folder Include="DaVuRedux\UseCase\Product\" />
-    <Folder Include="DaVuRx\UseCase\Product\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="DaVuRx\Framework\redux\applyMiddleware.ts" />

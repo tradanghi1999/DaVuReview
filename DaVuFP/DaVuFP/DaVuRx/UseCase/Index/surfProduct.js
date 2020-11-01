@@ -162,7 +162,7 @@ async function addClickToCategory(gridTitle, title) {
 }
 
 function goToUrl(hrefL) {
-    location.href = hrefL;
+    location.href = (hrefL);
 }
 
 
@@ -194,6 +194,7 @@ async function loadGiftToRamAsync(gifts) {
 
 // render data in ram
 // render level 1
+
 async function renderItemAsync(item, imgs){
     let [img, itemProto] = await
         Promise.all([
@@ -203,6 +204,7 @@ async function renderItemAsync(item, imgs){
 
     itemProto.find(".itemId").text(item.id);
     itemProto.find(".itemName").text(item.title);
+   
     itemProto.find(".itemPrice").text(item.price);
 
     itemProto.find(".itemImg").text(null);
@@ -382,19 +384,23 @@ export function attachSurfProductRx() {
 
 
     let grid$ = from(gridPipe)
+        .pipe(
+            operators.map(grids =>
+                grids.map(attachSurfGroupRx)
+            )
+        )
     grid$.subscribe(async grids => {
-        await console.log(grids)
+        //await console.log(grids)
+
         await confirmLoaded(grids)
         await appendGridToHTML(grids)
         //await cacheMemory(grids)
         await beautifyRender(grids)
         await removeProto(grids)
+        await attachSurfProductDetailToAll()
     })
 
-    grid$.pipe(
-        operators.pluck(0)
-    )
-    .subscribe(console.log)
+
 
     
     fromEvent(window,'resize')
@@ -418,6 +424,46 @@ export function attachSurfProductRx() {
         )
     })        
 }
+
+
+
+function attachSurfGroupRx(grid) {
+    let gridTitle = grid.find(".gridTitle");
+    let title = gridTitle.text();
+    gridTitle.on("click", function () {
+        goToUrl(categoryRootLink + title)
+    })
+    return grid;
+}
+
+let productRootLink = "product.html?id="
+function attachSurfProductDetail(item) {
+    let itemId = $(item).find(".itemId").text();
+    let itemName = $(item).find(".itemName");
+    itemName.on("click", function () {
+        goToUrl(productRootLink + encodeURIComponent(itemId));
+    })
+}
+
+async function attachSurfProductDetailToAll() {
+
+    let items = $(".item").toArray()
+    .filter(
+        item => {
+            let itemId = $(item).find(".itemId").text();
+            return itemId.includes("#")
+        }
+    )
+
+    items.forEach(item => attachSurfProductDetail(item));
+}
+
+
+
+
+
+
+
 
 
 
