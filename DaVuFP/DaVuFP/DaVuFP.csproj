@@ -5301,36 +5301,6 @@
     <Folder Include="DaVuRedux\UseCase\Product\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\applyMiddleware.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\bindActionCreators.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\combineReducers.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\compose.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\createStore.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\index.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\types\actions.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\types\middleware.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\types\reducers.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\types\store.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\utils\actionTypes.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\utils\isPlainObject.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\utils\symbol-observable.ts" />
-    <TypeScriptCompile Include="DaVuRx\Framework\redux\utils\warning.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\applyMiddleware.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\bindActionCreators.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\combineReducers.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\compose.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\createStore.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\index.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\types\actions.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\types\middleware.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\types\reducers.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\types\store.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\utils\actionTypes.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\utils\isPlainObject.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\utils\symbol-observable.ts" />
-    <TypeScriptCompile Include="DaVuRedux\Framework\redux\utils\warning.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
