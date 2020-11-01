@@ -314,7 +314,7 @@ import {
     
     Observable,
     from, of, fromEvent,
-    combineLatest
+    combineLatest, concat, forkJoin, zip
 } from 'https://dev.jspm.io/rxjs@6/_esm2015';
 import * as operators from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
 import { ajax } from 'https://dev.jspm.io/rxjs@6/_esm2015/ajax';
@@ -324,30 +324,72 @@ export function attachSurfProductRx() {
     let productPipe = getProductAjax
     let giftPipe = getGiftCategoryAjax
 
-    let imagePipe =
-        pipeln.combineAsync(
-            productPipe
-                .then(loadProductToRamAsync),
-            giftPipe.then(loadGiftToRamAsync)
-        )
+    //Rx
 
-    productPipe =
-        pipeln.combinePipeAsync(
-            renderAllItemInProductAsync,
-            productPipe,
-            imagePipe);
+    let product$ = from(productPipe)
+        
 
-    giftPipe =
-        pipeln.combinePipeAsync(
-            renderAllItemInGiftAsync,
-            giftPipe,
-            imagePipe);
+    let gift$ = from(giftPipe)
+        
 
-    let itemPipe = pipeln.combineAsync(productPipe, giftPipe);
-    let gridPipe = pipeln.combinePipeAsync(
-        renderDataAsync,
-        itemPipe,
-        catPipe)
+    let image$ = forkJoin(
+        product$.pipe(
+            operators.flatMap(loadProductToRamAsync)
+        ),
+        gift$.pipe(
+            operators.flatMap(loadGiftToRamAsync)
+        ))
+        .pipe(
+            operators.map(([productImgs, giftImgs]) =>
+                [...productImgs, ...giftImgs]),
+            
+    )
+        
+
+    let item$ = image$.pipe(
+        operators.withLatestFrom(product$, gift$),
+        //operators.withLatestFrom(gift$),
+        operators.flatMap(async ([imgs, products, gifts]) => {
+                
+            
+
+            let rdrProducts = await 
+                renderAllItemInProductAsync(products, imgs) //,
+            let rdrGifts = await renderAllItemInGiftAsync(gifts, imgs)
+            
+
+            let rdrItems = [...rdrProducts, ...rdrGifts];
+            return rdrItems
+        })
+    )
+        //.subscribe(console.log)
+    
+
+
+    //let imagePipe =
+    //    pipeln.combineAsync(
+    //        productPipe
+    //            .then(loadProductToRamAsync),
+    //        giftPipe.then(loadGiftToRamAsync)
+    //    )
+
+    //productPipe =
+    //    pipeln.combinePipeAsync(
+    //        renderAllItemInProductAsync,
+    //        productPipe,
+    //        imagePipe);
+
+    //giftPipe =
+    //    pipeln.combinePipeAsync(
+    //        renderAllItemInGiftAsync,
+    //        giftPipe,
+    //        imagePipe);
+
+    //let itemPipe = pipeln.combineAsync(productPipe, giftPipe);
+    //let gridPipe = pipeln.combinePipeAsync(
+    //    renderDataAsync,
+    //    itemPipe,
+    //    catPipe)
 
     let confirmLoaded = async (grids) => {
         $(".preload").removeClass("preload");
@@ -383,12 +425,32 @@ export function attachSurfProductRx() {
     }
 
 
-    let grid$ = from(gridPipe)
-        .pipe(
-            operators.map(grids =>
+    //let grid$ = from(gridPipe)
+    //    .pipe(
+    //        operators.map(grids =>
+    //            grids.map(attachSurfGroupRx)
+    //        )
+    //    )
+
+    let cat$ = from(catPipe)
+    let grid$ = item$.pipe(
+        operators.withLatestFrom(cat$),
+        operators.flatMap(async ([items, cats]) => {
+                let grids = await renderDataAsync(items, cats)
+                return grids
+        }),
+        operators.map(grids =>
                 grids.map(attachSurfGroupRx)
             )
-        )
+    )
+    
+
+    
+        
+
+    
+            
+
     grid$.subscribe(async grids => {
         //await console.log(grids)
 
@@ -403,26 +465,26 @@ export function attachSurfProductRx() {
 
 
     
-    fromEvent(window,'resize')
-    .pipe(
-        operators.withLatestFrom(grid$)
-    )
-    .subscribe(async ([docClick, grids]) => {
-        $(".preload").removeClass("preload");
-        $(".bufferItem").remove();
+    //fromEvent(window,'resize')
+    //.pipe(
+    //    operators.withLatestFrom(grid$)
+    //)
+    //.subscribe(async ([docClick, grids]) => {
+    //    $(".preload").removeClass("preload");
+    //    $(".bufferItem").remove();
 
-        //let grids = cache.getCache("grids")
-        await prom.arrayDoingAsync(
-            grids,
-            (grd) => beautify.beautifyAsync(
-                grd,
-                'gridContent',
-                'item',
-                '<div class="bufferItem"></div>'
-            ),
-            null
-        )
-    })        
+    //    //let grids = cache.getCache("grids")
+    //    await prom.arrayDoingAsync(
+    //        grids,
+    //        (grd) => beautify.beautifyAsync(
+    //            grd,
+    //            'gridContent',
+    //            'item',
+    //            '<div class="bufferItem"></div>'
+    //        ),
+    //        null
+    //    )
+    //})        
 }
 
 
